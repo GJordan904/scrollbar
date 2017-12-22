@@ -1,0 +1,85 @@
+.dev-icon {
+  height: 75px;
+  width: 75px;
+  display: inline-flex;
+
+  &.tiny {
+    height: 25px;
+    width: 25px
+  }
+
+  &.xl {
+    height: 350px;
+    width: 350px;
+  }
+
+  &.aws {
+    background: url("/assets/img/dev/amazonwebservices.svg") center no-repeat;
+  }
+  &.angular {
+    background: url("/assets/img/dev/angular.svg") center no-repeat;
+  }
+  &.apache {
+    background: url("/assets/img/dev/apache.svg") center no-repeat;
+  }
+  &.babel {
+    background: url("/assets/img/dev/babel.svg") center no-repeat;
+  }
+  &.bootstrap {
+    background: url("/assets/img/dev/bootstrap.svg") center no-repeat;
+  }
+  &.css3 {
+    background: url("/assets/img/dev/css3.svg") center no-repeat;
+  }
+  &.git {
+    background: url("/assets/img/dev/git.svg") center no-repeat;
+  }
+  &.github {
+    background: url("/assets/img/dev/github.svg") center no-repeat;
+  }
+  &.gulp {
+    background: url("/assets/img/dev/gulp.svg") center no-repeat;
+  }
+  &.html5 {
+    background: url("/assets/img/dev/html5.svg") center no-repeat;
+  }
+  &.javascript {
+    background: url("/assets/img/dev/javascript.svg") center no-repeat;
+  }
+  &.jquery {
+    background: url("/assets/img/dev/jquery.svg") center no-repeat;
+  }
+  &.laravel {
+    background: url("/assets/img/dev/laravel.svg") center no-repeat;
+  }
+  &.mysql {
+    background: url("/assets/img/dev/mysql.svg") center no-repeat;
+  }
+  &.php {
+    background: url("/assets/img/dev/php.svg") center no-repeat;
+  }
+  &.phpstorm {
+    background: url("/assets/img/dev/phpstorm.svg") center no-repeat;
+  }
+  &.sass {
+    background: url("/assets/img/dev/sass.svg") center no-repeat;
+  }
+  &.typescript {
+    background: url("/assets/img/dev/typescript.svg") center no-repeat;
+  }
+  &.ubuntu {
+    background: url("/assets/img/dev/ubuntu.svg") center no-repeat;
+  }
+  &.vuejs {
+    background: url("/assets/img/dev/vuejs.svg") center no-repeat;
+  }
+  &.webpack {
+    background: url("/assets/img/dev/webpack.svg") center no-repeat;
+  }
+  &.wordpress {
+    background: url("/assets/img/dev/wordpress.svg") center no-repeat;
+  }
+  &.question {
+    background: url("/assets/img/dev/head-with-question-mark.svg") center no-repeat;
+  }
+}

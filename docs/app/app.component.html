@@ -1,0 +1,25 @@
+<div class="container-fluid wrapper">
+    <div class="row">
+        <nav class="navbar cbj-elevation-3 navbar-expand navbar-dark bg-primary w-100">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a routerLink="/home" routerLinkActive="active" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/getting-started" routerLinkActive="active">Getting Started</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/usage" routerLinkActive="active">Usage</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div class="row">
+        <div class="main-content" [cbjScrollbar]="mainScrollbar">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

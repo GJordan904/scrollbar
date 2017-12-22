@@ -1,0 +1,11 @@
+@import "../scss/variables";
+
+.wrapper {
+  overflow: hidden;
+}
+
+.main-content {
+  height: calc(100vh - #{$navbar-height});
+  padding: 0 0 2rem 0;
+  width: 100%;
+}

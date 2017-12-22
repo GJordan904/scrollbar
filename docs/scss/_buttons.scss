@@ -1,0 +1,62 @@
+/**
+  * Buttons
+ */
+
+.btn {
+  align-items: center;
+  display: inline-flex;
+  background: transparent;
+  color: $flat-btn-color;
+  border-radius: $cbj-btn-border-radius;
+  text-transform: $btn-text-transform;
+  border: none;
+
+  .material-icons {
+    margin: 0 .25rem;
+  }
+
+  &:hover {
+    background-color: rgba($flat-btn-active-bg, .5);
+    color: rgba($flat-btn-active-color, .5);
+  }
+
+  &:active, &:focus {
+    background-color: $flat-btn-active-bg;
+    color: $flat-btn-active-color;
+  }
+
+  @each $color, $value in $theme-colors {
+    &.btn-#{$color} {
+      background: transparent;
+      color: $value;
+
+      &:hover {
+        background-color: rgba($value, .5);
+        color: rgba($flat-variant-active-color, .5);
+      }
+
+      &:active, &:focus {
+        background-color: $value;
+        color: $flat-variant-active-color;
+      }
+    }
+  }
+
+  &.raised {
+    @include elevation-action;
+    background-color: $raised-btn-bg;
+    color: $raised-btn-color;
+
+    @each $color, $value in $theme-colors {
+      &.btn-#{$color} {
+        background-color: $value;
+        color: $raised-variant-color;
+      }
+    }
+
+    &:active {
+      border: none;
+      outline: none;
+    }
+  }
+}

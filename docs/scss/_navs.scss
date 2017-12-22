@@ -1,0 +1,40 @@
+.navbar {
+  z-index: 50000;
+  height: $navbar-height;
+}
+.indicator {
+  height: .25rem;
+  border-radius: 5%;
+  width: 80%;
+  position: absolute;
+  bottom: -.12rem;
+  background-color: $indicator-bg;
+  left: 50%;
+  transform: translateX(-50%);
+
+}
+.nav-item {
+  cursor: pointer;
+  position: relative;
+
+  .icon {
+    position: absolute;
+    top: .5rem;
+    left: 10%;
+  }
+}
+
+.nav-card {
+  .nav-tabs {
+    .nav-link {
+      color: $nav-card-link-color;
+      border: none;
+      padding-left: $nav-card-link-padding-left;
+
+      &.active {
+        color: $nav-card-link-active-color;
+        background-color: transparent;
+      }
+    }
+  }
+}

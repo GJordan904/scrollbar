@@ -1,0 +1,16 @@
+/**
+ * Cards
+ */
+.card {
+  @include elevation-2;
+
+  @each $color, $value in $theme-colors {
+    &.bg-#{$color} {
+
+      .card-header {
+        background-color: darken($value, 10%);
+      }
+    }
+  }
+}
+
