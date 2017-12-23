@@ -103,14 +103,11 @@ export class CbjScrollbarDirective implements OnInit, AfterViewInit, AfterViewCh
       this.renderer.addClass(this.wrapper, this.config.wrapperClasses);
     }
 
-    this.renderer.setStyle(this.wrapper, 'padding', 0);
     this.renderer.addClass(this.wrapper, 'cbj-scroll-wrapper');
-    this.renderer.addClass(this.wrapper, 'show');
     this.renderer.setStyle(this.wrapper, 'overflow', 'hidden');
     this.renderer.setStyle(this.wrapper, 'display', 'flex');
     this.renderer.setStyle(this.wrapper, 'margin', getComputedStyle(el).margin);
     this.renderer.setStyle(this.wrapper, 'width', this.config.wrapperWidth);
-    this.renderer.setStyle(this.wrapper, `padding-${this.config.position}`, `${this.config.gridWidth}`);
     this.renderer.setStyle(this.wrapper, 'height', getComputedStyle(el).height);
 
     if (this.config.wrapperStyles.length > 0) {
@@ -127,7 +124,6 @@ export class CbjScrollbarDirective implements OnInit, AfterViewInit, AfterViewCh
     this.grid = this.renderer.createElement('div');
 
     this.renderer.addClass(this.grid, 'cbj-scroll-grid');
-    this.renderer.addClass(this.grid, 'show');
     this.renderer.setStyle(this.grid, 'position', 'absolute');
     this.renderer.setStyle(this.grid, 'top', '0');
     this.renderer.setStyle(this.grid, 'bottom', '0');
@@ -160,7 +156,6 @@ export class CbjScrollbarDirective implements OnInit, AfterViewInit, AfterViewCh
     const translate = this.config.position === 'right' ? 'translateX(50%)' : 'translateX(-50%)';
 
     this.renderer.addClass(this.bar, 'cbj-scroll-bar');
-    this.renderer.addClass(this.bar, 'show');
     this.renderer.setStyle(this.bar, 'position', 'absolute');
     this.renderer.setStyle(this.bar, 'top', '0');
     this.renderer.setStyle(this.bar, this.config.position, this.config.barOffset);
@@ -181,7 +176,7 @@ export class CbjScrollbarDirective implements OnInit, AfterViewInit, AfterViewCh
     }
 
     if (!this.config.alwaysVisible) {
-      this.renderer.setStyle(this.grid, 'opacity', 0);
+      this.renderer.setStyle(this.bar, 'opacity', 0);
       this.hidden = true;
     } else {
       this.hidden = false;
@@ -300,7 +295,6 @@ export class CbjScrollbarDirective implements OnInit, AfterViewInit, AfterViewCh
     clearTimeout(this.timeout);
 
     if (this.hidden && !this.notNeeded) {
-      this.renderer.setStyle(this.wrapper, 'padding', '0 1rem 0 0');
       this.renderer.setStyle(this.grid, 'opacity', 1);
       this.renderer.setStyle(this.bar, 'opacity', 1);
       this.hidden = false;

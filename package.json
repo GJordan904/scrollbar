@@ -7,7 +7,7 @@
     "start": "ng serve",
     "build": "ng build",
     "build:app": "mkdir docs/@codebyjordan && cp -R dist/scrollbar docs/@codebyjordan/scrollbar && ng build && rimraf docs/@codebyjordan",
-    "build:lib": "ng-packagr",
+    "build:lib": "ng-packagr && cp README.md dist/scrollbar",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

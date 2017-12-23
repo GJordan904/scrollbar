@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {ScrollbarOptions} from '@codebyjordan/scrollbar';
 
 @Component({
@@ -6,7 +6,7 @@ import {ScrollbarOptions} from '@codebyjordan/scrollbar';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   firstCardScroll: ScrollbarOptions = {
     barBackground: '#216869',
     gridBackground: '#1F2421',
@@ -31,8 +31,5 @@ export class HomeComponent implements OnInit {
   };
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
 }
