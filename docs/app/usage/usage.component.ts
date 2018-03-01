@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ScrollbarOptions} from '../../../cbj-scrollbar/models';
+import {ScrollbarConfig} from '../../../cbj-scrollbar/models';
 
 @Component({
   selector: 'cbj-usage',

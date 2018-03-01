@@ -4,19 +4,24 @@ This package allows you to easily create custom scrollbars with Angular 5. It is
 are better than others.  It is a great start and just needs some minor adjustments and it could be production ready. Anyone 
 wanting to contribute, I am gladly accepting PR's.
 
-## Usage
+## Table of Contents
+* [Install](#<a-name="install"></a>install)
+* [Import](#<a-name="import"></a>-import)
+* [Usage](#<a-name="usage"></a>-usage)
+** [Main Scrollbar](#<a-name="root"></a>-as-the-windows-main-scrollbar)
+** [Cards](#<a-name="cards"></a>-cards-(multiple))
+* [Config](#<a-name="config"></a>-configuration)
+* [Defaults](#<a-name="defaults"></a>-defaults)
+* [Services](#<a-name="services"></a>-services)
 
-Below is the basic setup to get started, for more details please see the [Docs/Example](https://scrollbar.codebyjordan.com) page (work-in-progress).
-The install and import steps are going to be universal with variable ways to implement. The component and markup code
-below come from the home page of the [Docs/Example](https://scrollbar.codebyjordan.com)
 
-### Install
+## <a name="install"></a>Install
 
 ```bash
 npm i --save @codebyjordan/scrollbar
 ```
 
-### Import
+## <a name="import"></a> Import
 
 ```typescript
 // app.module.ts
@@ -35,16 +40,133 @@ import { CbjScrollbarModule } from '@codebyjordan/scrollbar';
 })
 export class AppModule { }
 ```
-### Markup
 
+## <a name="usage"></a> Usage
+Below are a couple example usages to get started. I use Bootstrap 4 but this not required, although other styles may need
+be applied. 
+
+### <a name="root"></a> As the windows main scrollbar
+Here I am going to override the browsers scrollbar and use this as the main windows scrollbar. I will be using a minimal 
+setup for demonstration purposes, see the Configuration section for more options.  
+
+#### app.component.ts
+```typescript
+import {Component, OnInit} from '@angular/core';
+import {ScrollbarOptions, ScrollbarConfig} from '@codebyjordan/scrollbar';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styles: ['./app.component.scss']
+})
+export class AppComponent implements OnInit {
+  mainScrollbar: ScrollbarConfig;
+
+  ngOnInit() {
+    this.mainScrollbar = new ScrollbarConfig({
+      isRoot: true,
+      alwaysVisible: true
+    });
+  }
+}
+```
+
+#### app.component.html
 ```html
-<style>
-    .scroll-card {
-      height: 350px;
-      padding: 0 1.5rem;
-      border: none;
-    }
-</style>
+<div class="container-fluid wrapper">
+     <div class="row">
+         <nav class="navbar cbj-elevation-3 navbar-expand navbar-dark bg-primary w-100">
+             <div class="collapse navbar-collapse">
+                 <ul class="navbar-nav mr-auto">
+                     <li class="nav-item">
+                         <a routerLink="/home" routerLinkActive="active" class="nav-link">Home</a>
+                     </li>
+                     <li class="nav-item">
+                         <a class="nav-link" routerLink="/getting-started" routerLinkActive="active">Getting Started</a>
+                     </li>
+                     <li class="nav-item">
+                         <a class="nav-link" routerLink="/usage" routerLinkActive="active">Usage</a>
+                     </li>
+                 </ul>
+             </div>
+         </nav>
+     </div>
+ 
+     <div class="row">
+         <div class="main-content" [cbjScrollbar]="mainScrollbar">
+             <router-outlet></router-outlet>
+         </div>
+     </div>
+ </div>
+```
+
+#### app.component.scss
+```scss
+$navbar-height: 3.25rem;
+
+.wrapper {
+  overflow: hidden;
+}
+
+.main-content {
+  height: calc(100vh - #{$navbar-height});
+  width: 100%;
+}
+```
+
+### <a name="cards"></a> Cards (multiple)
+In this example I make three BS4 cards with a height of 350px and some Lipsum text. Each one has a slightly different 
+configuration and look. 
+
+#### card-demo.component.ts
+```typescript
+import {Component, OnInit} from '@angular/core';
+import {ScrollbarOptions, ScrollbarConfig} from '@codebyjordan/scrollbar';
+
+@Component({
+  selector: 'app-card-demo',
+  templateUrl: './card-demo.component.html',
+  styleUrls: ['./card-demo.component.scss']
+})
+export class CardDemoComponent implements OnInit {
+  firstCardScroll: ScrollbarConfig;
+  secondCardScroll: ScrollbarConfig;
+  thirdCardScroll: ScrollbarConfig;
+
+  ngOnInit(): void {
+    this.firstCardScroll = new ScrollbarConfig({
+      styles: {
+        grid: [
+          { prop: 'border-top-right-radius', val: '.25rem' },
+          { prop: 'border-bottom-right-radius', val: '.25rem' },
+          { prop: 'opacity', val: '.75' },
+          { prop: 'background', val: '#1F2421' },
+        ],
+        bar: [
+          { prop: 'background', val: '#216869' }
+        ],
+      },
+      alwaysVisible: true
+    });
+
+    this.secondCardScroll = new ScrollbarConfig({styles: {bar: [{ prop: 'background', val: '#2274A5' }]}});
+
+    this.thirdCardScroll = new ScrollbarConfig({
+      styles: {
+        bar: [
+          { prop: 'opacity', val: '.65'},
+          { prop: 'background', val: '#1F2421' }
+        ]
+      },
+      alwaysVisible: true
+    });
+  }
+}
+
+```
+
+#### card-demo.component.html
+```html
 <div class="container py-4">
     <div class="row">
         <div class="col">
@@ -60,7 +182,6 @@ export class AppModule { }
             <div class="card mt-4 scroll-card bg-secondary text-white">
                 <div class="card-body" [cbjScrollbar]="secondCardScroll">
                     ...
-                </div>
             </div>
         </div>
     </div>
@@ -77,100 +198,46 @@ export class AppModule { }
 </div>
 ```
 
-### Component
-
-```typescript
-import { Component } from '@angular/core';
-import {ScrollbarOptions} from '@codebyjordan/scrollbar';
-
-@Component({
-  selector: 'cbj-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
-})
-export class HomeComponent {
-  firstCardScroll: ScrollbarOptions = {
-    barBackground: '#216869',
-    gridBackground: '#1F2421',
-    gridStyles: [
-      { prop: 'border-top-right-radius', val: '.25rem' },
-      { prop: 'border-bottom-right-radius', val: '.25rem' },
-      { prop: 'opacity', val: '.75' }
-    ],
-    alwaysVisible: true
-  };
-
-  secondCardScroll: ScrollbarOptions = {
-    barBackground: '#2274A5',
-  };
-
-  thirdCardScroll: ScrollbarOptions = {
-    barBackground: '#1F2421',
-    barStyles: [
-      { prop: 'opacity', val: '.65' }
-    ],
-    alwaysVisible: true
-  };
-
-  constructor() { }
-
+#### card-demo.component.scss
+```scss
+.scroll-card {
+  height: 350px;
+  padding: 0 1.5rem;
+  border: none;
+  overflow: hidden;
 }
 ```
 
-## ScrollbarOptions
-The ScrollbarOptions interface is used for configuring the scrollbar. Below is the interface declaration and the default 
-config used in the directive. 
+## <a name="config"></a> Configuration
+You must pass an instance of ScrollbarConfig to the directive for it to function. However, how much you configure is up to
+you. It is possible to go with no configuration at all and only pass `{}` to the ScrollbarConfig constructor.
 
+### ScrollbarConfig
+The ScrollbarConfig constructor takes a single argument using the ScrollbarOptions interface. Use this interface to 
+configure the scrollbar. The available options are:
 ```typescript
-import {Subject} from 'rxjs/Subject';
-
 export interface ScrollbarOptions {
   isRoot?: boolean;
   position?: string;
-  barOffset?: string;
-  barBackground?: string;
-  barWidth?: string;
-  barBorderRadius?: string;
-  barMargin?: string;
-  barStyles?: Array<{ prop: string, val: string }>;
-  wrapperWidth?: string;
-  wrapperStyles?: Array<{ prop: string, val: string }>;
-  wrapperClasses?: string;
-  gridBackground?: string;
-  gridWidth?: string;
-  gridOffset?: string;
-  gridBorderRadius?: string;
-  gridMargin?: string;
-  gridStyles?: Array<{ prop: string, val: string }>;
   alwaysVisible?: boolean;
   visibleTimeout?: number;
   toggleClasses?: Subject<{ el: string, classes: string, remove: boolean }>;
+  styles?: ScrollbarStyles;
+  classes?: ScrollbarClasses;
 }
 
-// from scrollbar.directive.ts
-const DEFAULT_SCROLLBAR: ScrollbarOptions = {
-  isRoot: false,
-  position: 'right',
-  barOffset: '.5rem',
-  barBackground: '#495057',
-  barWidth: '.7rem',
-  barBorderRadius: '10px',
-  barMargin: '0',
-  barStyles: [],
-  wrapperWidth: '100%',
-  wrapperStyles: [],
-  wrapperClasses: '',
-  gridBackground: 'transparent',
-  gridWidth: '1rem',
-  gridOffset: '0',
-  gridBorderRadius: '0',
-  gridMargin: '0',
-  gridStyles: [],
-  alwaysVisible: false,
-  visibleTimeout: 3000
-};
-``` 
+export interface ScrollbarStyles {
+  wrapper?: Array<{ prop: string, val: string }>;
+  grid?: Array<{ prop: string, val: string }>;
+  bar?: Array<{ prop: string, val: string }>;
+}
 
+export interface ScrollbarClasses {
+  wrapper?: string;
+  grid?: string;
+  bar?: string;
+}
+```
 #### isRoot
 * **Type:** boolean
 * **Default:** false
@@ -183,119 +250,90 @@ Setting isRoot to true does the following things:
 * If the RouterModule is present it will listen for Route changes and scroll to top on route change
 
 #### position
-* **Type:** string
-* **Default:** 'right'
+* **Type:** `string`
+* **Default:** `'right'`
 
 The position of the scrollbar. Valid options are 'right' and 'left'.
 
-#### barOffset
-* **Type:** string
-* **Default:** '.5rem'
-
-The right or left position of the bar. Any valid css value for the property right or left is valid.
-
-#### barBackground
-* **Type:** string
-* **Default:** '#495057'
-
-The background color of the scrollbar. Any valid css value for the property background-color is valid.
-
-#### barWidth
-* **Type:** string
-* **Default:** '.7rem'
-
-The width of the scrollbar. Any valid css value for the property width is valid.
-
-#### barBorderRadius
-* **Type:** string
-* **Default:** '10px'
-
-Border radius of scrollbar. Any valid css value for the property border-radius is valid.
-
-#### barMargin
-* **Type:** string
-* **Default:** '0'
-
-The bars margin property. Any valid css value for the property margin is valid.
-
-#### barStyles
-* **Type:** Array<{prop: string, val: string}>
-* **Default:** []
-
-Additional styles to be applied to the scrollbar. An array of objects with the properties prop and val that are both strings.
-Any valid css property and value are acceptable and any styles set here will override all other styles set. 
-
-#### wrapperWidth
-* **Type:** string
-* **Default:** '100%'
-
-The wrapper width. Any valid css value for the property width is valid.
-
-#### wrapperStyles
-* **Type:** Array<{prop: string, val: string}>
-* **Default:** []
-
-Additional styles to be applied to the wrapper. An array of objects with the properties prop and val that are both strings.
-Any valid css property and value are acceptable and any styles set here will override all other styles set. 
-
-#### wrapperClasses
-* **Type:** string
-* **Default:** ''
-
-Classes to be applied to the wrapper.
-
-#### gridBackground
-* **Type:** string
-* **Default:** 'transparent'
-
-The background color of the grid. Any valid css value for the property background-color is valid.
-
-#### gridWidth
-* **Type:** string
-* **Default:** '1rem'
-
-The grids width property. Any valid css value for the property width is valid.
-
-#### gridOffset
-* **Type:** string
-* **Default:** '0'
-
-The right or left position of the grid. Any valid css value for the property right or left is valid.
-
-#### gridBorderRadius
-* **Type:** string
-* **Default:** '0'
-
-Border radius of grid. Any valid css value for the property border-radius is valid.
-
-#### gridMargin
-* **Type:** string
-* **Default:** '0'
-
-The grids margin property. Any valid css value for the property margin is valid.
-
-#### gridStyles
-* **Type:** Array<{prop: string, val: string}>
-* **Default:** []
-
-Additional styles to be applied to the grid. An array of objects with the properties prop and val that are both strings.
-Any valid css property and value are acceptable and any styles set here will override all other styles set. 
-
 #### alwaysVisible
-* **Type:** boolean
-* **Default:** false
+* **Type:** `boolean`
+* **Default:** `false`
 
 Boolean setting whether the scrollbar hides after a timeout.
 
 #### visibleTimeout
-* **Type:** number
-* **Default:** 3000
+* **Type:** `number`
+* **Default:** `3000`
 
 The timeout in milliseconds for hiding the scrollbar.
 
+#### toggleClasses
+* **Type:** `Subject<{ el: string, classes: string, remove: boolean }>`
+* **Default:** `undefined`
 
+A Subject that can be used to toggle classes on the wrapper, grid, or bar elements. 
 
-## Services
+#### styles
+* **Type:** `ScrollbarStyles`
+* **Default:** `See Below`
+
+A ScrollbarStyles object can hold an array of styles properties stored as`{prop: string, val: string}` objects. The ScrollbarStyles 
+interface has a key for each the wrapper, grid, and bar element, each of which can take an array of styles. Any valid 
+css property can be passed with a valid value as a string.
+
+#### classes
+* **Type:** `ScrollbarClasses`
+* **Default:** `See Below`
+
+The ScrollbarClasses interface has a key for each the wrapper, grid, and bar element that accept a string of class(es) to
+be applied to the element.
+
+## <a name="defaults"></a> Defaults
+```typescript
+export const DEFAULT_SCROLLBAR: ScrollbarOptions = {
+  isRoot: false,
+  position: 'right',
+  alwaysVisible: false,
+  visibleTimeout: 3000,
+  styles: {
+    wrapper: [
+      {prop: 'width', val: '100%'},
+      {prop: 'overflow', val: 'hidden'},
+      {prop: 'display', val: 'flex'}
+    ],
+    grid: [
+      {prop: 'position', val: 'absolute'},
+      {prop: 'top', val: '0'},
+      {prop: 'bottom', val: '0'},
+      {prop: 'display', val: 'block'},
+      {prop: 'cursor', val: 'pointer'},
+      {prop: 'z-index', val: '99'},
+      {prop: 'background', val: 'transparent'},
+      {prop: 'width', val: '1rem'},
+      {prop: 'offset', val: '0'},
+      {prop: 'borderRadius', val: '0'},
+      {prop: 'margin', val: '0'},
+      {prop: 'transition', val: 'opacity 250ms ease-in-out'}
+    ],
+    bar: [
+      {prop: 'position', val: 'absolute'},
+      {prop: 'top', val: '0'},
+      {prop: 'display', val: 'block'},
+      {prop: 'cursor', val: 'pointer'},
+      {prop: 'transition', val: 'opacity 250ms ease-in-out'},
+      {prop: 'z-index', val: '100'},
+      {prop: 'offset', val: '.5rem'},
+      {prop: 'background', val: '#495057'},
+      {prop: 'width', val: '.7rem'},
+      {prop: 'borderRadius', val: '10px'},
+      {prop: 'margin', val: '0'}
+    ]
+  },
+  classes: {}
+};
+```
+
+## <a name="services"></a> Services
 The package provides 2 services and an Injectable token.
 
 ### ScrollbarService
@@ -306,66 +344,61 @@ and scroll height.
 The ScrollbarService properties
 
 ##### scrollObs
-* **Type:** Observable\<number>
+* **Type:** `Observable<number>`
 
 Subscribe to this observable to watch scrolling and get the scroll position.
 
 ##### scrollPos
-* **Type:** number
+* **Type:** `number`
 
 The current scroll position.
 
 ##### scrollHeight
-* **Type:** number
+* **Type:** `number`
 
 The height of the root scrollbars window.
 
 ##### childScrolling
-* **Type:** boolean
+* **Type:** `boolean`
 
 Boolean indicating whether a non root scrollbar is currently scrolling.
 
 #### Methods
 ScrollbarService Methods
 
-##### initWheel(el: HTMLElement): Observable<any>
-Returns Observable created from the wheel event.
+#### getOffsetTop(el): number
+Returns the passed elements offset top value
 
-#### initDrag(el: HTMLElement, bar: HTMLElement): {start: Observable<any>, end: Observable<any>}
-Returns Observables of drag start and drag end events
+#### getOffsetBottom(el): number
+Returns the passed elements offset bottom value
 
 ### WindowService
 
 #### Properties
 The WindowService properties
 
-##### w
-The Window object
+##### window
+* **Type:** `Window`
+
+The browsers Window object
 
 ##### resizeObs
-* **Type:** Observable\<any>
+* **Type:** `Observable<any>`
 
 Observable of the window resize event.
 
 ##### isMobile
-* **Type:** number
+* **Type:** `number`
 
 Boolean indicating if on mobile sized display.
 
-##### innerWidth
-* **Type:** number
+##### width
+* **Type:** `number`
 
 The width of the window.
 
-#### Methods
-WindowService Methods
 
-##### getWinHeight(): number
-Returns the "Window" height. This is actually the height of the root scrollbar wrapper. This is returning the value of scrollHeight
-from the ScrollbarService
+##### height
+* **Type:** `number`
 
-#### getOffsetTop(el): number
-Returns the passed elements offset top value
-
-#### getOffsetBottom(el): number
-Returns the passed elements offset bottom value
+The width of the window.

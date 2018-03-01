@@ -6,7 +6,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:app": "mkdir docs/@codebyjordan && cp -R dist/scrollbar docs/@codebyjordan/scrollbar && ng build && rimraf docs/@codebyjordan",
+    "build:app": "rm -rf docs/@codebyjordan/* && cp -r dist/scrollbar docs/@codebyjordan/scrollbar && ng build --prod",
     "build:lib": "ng-packagr && cp README.md dist/scrollbar",
     "test": "ng test",
     "lint": "ng lint",

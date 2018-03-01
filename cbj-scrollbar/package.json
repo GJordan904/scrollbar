@@ -1,11 +1,13 @@
 {
   "name": "@codebyjordan/scrollbar",
-  "version": "1.0.1",
-  "repository": "https://github.com/GJordan904/cbj-scrollbar.git",
+  "version": "2.0.0",
+  "repository": "https://github.com/GJordan904/scrollbar.git",
   "author": "Grant Jordan <grant@codebyjordan.com>",
   "license": "MIT",
   "peerDependencies": {
     "@angular/core": "^5.0.0",
-    "@angular/common": "^5.0.0"
+    "@angular/common": "^5.0.0",
+    "@angular/animations": "^5.0.0",
+    "web-animations-js": "^2.3.1"
   }
 }

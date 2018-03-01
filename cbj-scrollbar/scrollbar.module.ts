@@ -1,8 +1,19 @@
-import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
-import {ScrollbarService, WINDOW, WindowService} from './services';
-import {CbjScrollbarDirective} from './directives';
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { WINDOW, _window } from './services/window.token';
+import { WindowService } from './services/window.service';
+import { ScrollbarService } from './services/scrollbar.service';
+import { CbjScrollbarDirective } from './directives/scrollbar.directive';
 
 @NgModule({
+  imports: [
+    CommonModule
+  ],
+  providers: [
+    { provide: WINDOW, useFactory: _window },
+    WindowService,
+    ScrollbarService
+  ],
   declarations: [
     CbjScrollbarDirective
   ],
@@ -11,20 +22,14 @@ import {CbjScrollbarDirective} from './directives';
   ]
 })
 export class CbjScrollbarModule {
-  constructor(@Optional() @SkipSelf() parentModule: CbjScrollbarModule) {
-    if (parentModule) {
-      throw new Error(
-        'CbjScrollbarModule is already loaded. Import it with the forRoot method in the AppModule only');
-    }
-  }
 
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: CbjScrollbarModule,
       providers: [
+        { provide: WINDOW, useFactory: _window },
         WindowService,
-        ScrollbarService,
-        {provide: WINDOW, useValue: window}
+        ScrollbarService
       ]
     };
   }

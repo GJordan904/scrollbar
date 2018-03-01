@@ -1,71 +1,114 @@
 import {
-  AfterViewChecked, AfterViewInit, Directive, ElementRef, Input, OnDestroy, OnInit, Optional,
+  AfterViewChecked, AfterViewInit, Directive, ElementRef, Inject, Input, OnDestroy, OnInit, Optional,
   Renderer2
 } from '@angular/core';
-import {ScrollbarOptions} from '../models';
-import {ScrollbarService, WindowService} from '../services';
-import {Subject} from 'rxjs/Subject';
+import {DOCUMENT} from '@angular/common';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/filter';
-import {easing} from '../animations';
-import {Observable} from 'rxjs/Observable';
-import {NavigationStart, Router} from '@angular/router';
-
-
-const DEFAULT_SCROLLBAR: ScrollbarOptions = {
-  isRoot: false,
-  position: 'right',
-  barOffset: '.5rem',
-  barBackground: '#495057',
-  barWidth: '.7rem',
-  barBorderRadius: '10px',
-  barMargin: '0',
-  barStyles: [],
-  wrapperWidth: '100%',
-  wrapperStyles: [],
-  wrapperClasses: '',
-  gridBackground: 'transparent',
-  gridWidth: '1rem',
-  gridOffset: '0',
-  gridBorderRadius: '0',
-  gridMargin: '0',
-  gridStyles: [],
-  alwaysVisible: false,
-  visibleTimeout: 3000
-};
+import { easing } from '../animations/easings';
+import { NavigationStart, Router } from '@angular/router';
+import { ScrollbarConfig } from '../models/scrolbar-config';
+import { WindowService } from '../services/window.service';
+import { ScrollbarService } from '../services/scrollbar.service';
 
 @Directive({
   selector: '[cbjScrollbar]'
 })
 export class CbjScrollbarDirective implements OnInit, AfterViewInit, AfterViewChecked, OnDestroy {
-  @Input('cbjScrollbar') config: ScrollbarOptions;
+  /**
+   * The scrollbars configuration object
+   *
+   * @type {ScrollbarConfig}
+   */
+  @Input('cbjScrollbar') config: ScrollbarConfig;
 
+  /**
+   * The wrappers Element
+   *
+   * @type {HTMLElement}
+   */
   private wrapper: HTMLElement;
+
+  /**
+   * The grids Element
+   *
+   * @type {HTMLElement}
+   */
   private grid: HTMLElement;
+
+  /**
+   * The bars Element
+   *
+   * @type {HTMLElement}
+   */
   private bar: HTMLElement;
+
+  /**
+   * The height of the scrollable content
+   *
+   * @type {number}
+   */
   private scrollHeight: number;
+
+  /**
+   * The timeout for hiding the scrollbar
+   *
+   * @type {number | timeout}
+   */
   private timeout: any;
+
+  /**
+   * Indicates whether the scrollbar needs to be shown
+   *
+   * @type {boolean}
+   */
   private notNeeded: boolean;
+
+  /**
+   * Indicates whether the scrollbar is hidden
+   *
+   * @type {boolean}
+   */
   private hidden: boolean;
+
+  /**
+   * Subject to call to unsubscribe from Observables
+   *
+   * @type {Subject<void>}
+   */
   private unsubscribe = new Subject<void>();
 
+  /**
+   * @constructor
+   *
+   * @param {ElementRef} el
+   * @param {Renderer2} renderer
+   * @param {ScrollbarService} scroll
+   * @param {WindowService} ws
+   * @param {Document} doc
+   * @param {Router} router
+   */
   constructor(private el: ElementRef,
               private renderer: Renderer2,
               private scroll: ScrollbarService,
-              private window: WindowService,
+              private ws: WindowService,
+              @Inject(DOCUMENT) private doc: Document,
               @Optional() private router: Router) {
   }
 
   ngOnInit() {
-    this.config = {...DEFAULT_SCROLLBAR, ...this.config};
     this.createScrollbar();
   }
 
   ngAfterViewInit() {
-    setTimeout(this.setBarHeight, 0);
+    // Wait 250ms or else scrollbar breaks on page load in FF, then calculate and set the bar height
+    setTimeout(this.setBarHeight, 250);
   }
 
   ngAfterViewChecked() {
+    // Check if scrollHeight has changed and recalculate bar height if so
     const dif = this.scrollHeight !== Math.round(this.el.nativeElement.scrollHeight);
     if (dif) {
       this.setBarHeight();
@@ -73,11 +116,13 @@ export class CbjScrollbarDirective implements OnInit, AfterViewInit, AfterViewCh
   }
 
   ngOnDestroy() {
+    // do some cleanup and unsubscribe from our Observables
     this.unsubscribe.next();
     this.unsubscribe.complete();
   }
 
   private createScrollbar() {
+    this.setParentsStyles();
     this.setElementStyle();
     this.renderWrapper();
     this.renderGrid();
@@ -85,96 +130,121 @@ export class CbjScrollbarDirective implements OnInit, AfterViewInit, AfterViewCh
     this.subscribe();
   }
 
+  /**
+   * Here we set the hosts parent to position relative
+   * Additionally, to prevent a scrollbar from appearing in FF, we set the body to overflow hidden
+   */
+  private setParentsStyles(): void {
+    const el = this.el.nativeElement;
+    const parent = this.renderer.parentNode(el);
+    this.renderer.setStyle(parent, 'position', 'relative');
+
+    const body = this.doc.getElementsByTagName('BODY')[0];
+    this.renderer.setStyle(body, 'overflow', 'hidden');
+  }
+
+  /**
+   * Sets styles on host element
+   */
   private setElementStyle(): void {
     const el = this.el.nativeElement;
     this.renderer.setStyle(el, 'overflow', 'hidden');
     this.renderer.setStyle(el, 'position', 'relative');
     this.renderer.setStyle(el, 'display', 'block');
-
-    const parent = this.renderer.parentNode(el);
-    this.renderer.setStyle(parent, 'position', 'relative');
   }
 
+  /**
+   * Creates, configures, and inserts wrapper element
+   * The wrapper will go around all elements, including the host element
+   */
   private renderWrapper(): void {
+    // Get ref to containing div and create element
     const el = this.el.nativeElement;
     this.wrapper = this.renderer.createElement('div');
 
-    if (this.config.wrapperClasses) {
-      this.renderer.addClass(this.wrapper, this.config.wrapperClasses);
+    // Add Classes
+    if (this.config.wClass) {
+      this.renderer.addClass(this.wrapper, this.config.wClass + ' cbj-scroll-wrapper');
+    } else {
+      this.renderer.addClass(this.wrapper, 'cbj-scroll-wrapper');
     }
 
-    this.renderer.addClass(this.wrapper, 'cbj-scroll-wrapper');
-    this.renderer.setStyle(this.wrapper, 'overflow', 'hidden');
-    this.renderer.setStyle(this.wrapper, 'display', 'flex');
-    this.renderer.setStyle(this.wrapper, 'margin', getComputedStyle(el).margin);
-    this.renderer.setStyle(this.wrapper, 'width', this.config.wrapperWidth);
-    this.renderer.setStyle(this.wrapper, 'height', getComputedStyle(el).height);
+    // Set Dynamic Styles. Wait a tick since FF was too fast & height was still undefined
+    setTimeout(() => {
+      this.renderer.setStyle(this.wrapper, 'margin', getComputedStyle(el).margin);
+      this.renderer.setStyle(this.wrapper, 'height', getComputedStyle(el).height);
+    }, 0);
 
-    if (this.config.wrapperStyles.length > 0) {
-      for (const style of this.config.wrapperStyles) {
+    // Set Other Styles
+    if (this.config.wStyles) {
+      for (const style of this.config.wStyles) {
         this.renderer.setStyle(this.wrapper, style.prop, style.val);
       }
     }
 
+    // Insert the wrapper before the host el and then move the host and its contents inside the wrapper
     this.renderer.insertBefore(this.renderer.parentNode(el), this.wrapper, el);
     this.renderer.appendChild(this.wrapper, el);
   }
 
+  /**
+   * Creates, configures, and inserts grid element
+   */
   private renderGrid(): void {
+    // Create element
     this.grid = this.renderer.createElement('div');
 
-    this.renderer.addClass(this.grid, 'cbj-scroll-grid');
-    this.renderer.setStyle(this.grid, 'position', 'absolute');
-    this.renderer.setStyle(this.grid, 'top', '0');
-    this.renderer.setStyle(this.grid, 'bottom', '0');
-    this.renderer.setStyle(this.grid, this.config.position, this.config.gridOffset);
-    this.renderer.setStyle(this.grid, 'width', this.config.gridWidth);
-    this.renderer.setStyle(this.grid, 'background', this.config.gridBackground);
-    this.renderer.setStyle(this.grid, 'display', 'block');
-    this.renderer.setStyle(this.grid, 'cursor', 'pointer');
-    this.renderer.setStyle(this.grid, 'z-index', '99');
-    this.renderer.setStyle(this.grid, 'border-radius', this.config.gridBorderRadius);
-    this.renderer.setStyle(this.grid, 'margin', this.config.gridMargin);
-    this.renderer.setStyle(this.grid, 'transition', 'opacity 250ms ease-in-out');
+    // Add Classes
+    if (this.config.gClass) {
+      this.renderer.addClass(this.grid, this.config.gClass + ' cbj-scroll-grid');
+    } else {
+      this.renderer.addClass(this.grid, 'cbj-scroll-grid');
+    }
 
-    if (this.config.gridStyles.length > 0) {
-      for (const style of this.config.gridStyles) {
-        this.renderer.setStyle(this.grid, style.prop, style.val);
+    // Set Styles
+    if (this.config.gStyles) {
+      for (const style of this.config.gStyles) {
+        const prop = style.prop === 'offset' ? this.config.position : style.prop;
+        this.renderer.setStyle(this.grid, prop, style.val);
       }
     }
 
+    // Hide grid if alwaysVisible not set
     if (!this.config.alwaysVisible) {
       this.renderer.setStyle(this.grid, 'opacity', 0);
     }
 
+    // Insert the element
     this.renderer.appendChild(this.wrapper, this.grid);
   }
 
+  /**
+   * Creates, configures, and inserts bar element
+   */
   private renderBar(): void {
+    // Create element
     this.bar = this.renderer.createElement('div');
 
+    // Add Classes
+    if (this.config.bClass) {
+      this.renderer.addClass(this.bar, this.config.bClass + ' cbj-scroll-bar');
+    } else {
+      this.renderer.addClass(this.bar, 'cbj-scroll-bar');
+    }
+
+    // Set Dynamic Styles
     const translate = this.config.position === 'right' ? 'translateX(50%)' : 'translateX(-50%)';
-
-    this.renderer.addClass(this.bar, 'cbj-scroll-bar');
-    this.renderer.setStyle(this.bar, 'position', 'absolute');
-    this.renderer.setStyle(this.bar, 'top', '0');
-    this.renderer.setStyle(this.bar, this.config.position, this.config.barOffset);
-    this.renderer.setStyle(this.bar, 'width', this.config.barWidth);
-    this.renderer.setStyle(this.bar, 'background', this.config.barBackground);
-    this.renderer.setStyle(this.bar, 'display', 'block');
-    this.renderer.setStyle(this.bar, 'cursor', 'pointer');
-    this.renderer.setStyle(this.bar, 'z-index', '100');
-    this.renderer.setStyle(this.bar, 'border-radius', this.config.barBorderRadius);
-    this.renderer.setStyle(this.bar, 'margin', this.config.barMargin);
     this.renderer.setStyle(this.bar, 'transform', translate);
-    this.renderer.setStyle(this.bar, 'transition', 'opacity 250ms ease-in-out');
 
-    if (this.config.barStyles.length > 0) {
-      for (const style of this.config.barStyles) {
-        this.renderer.setStyle(this.bar, style.prop, style.val);
+    // Set Other Styles
+    if (this.config.bStyles) {
+      for (const style of this.config.bStyles) {
+        const prop = style.prop === 'offset' ? this.config.position : style.prop;
+        this.renderer.setStyle(this.bar, prop, style.val);
       }
     }
 
+    // Hide bar if alwaysVisible not set
     if (!this.config.alwaysVisible) {
       this.renderer.setStyle(this.bar, 'opacity', 0);
       this.hidden = true;
@@ -182,9 +252,13 @@ export class CbjScrollbarDirective implements OnInit, AfterViewInit, AfterViewCh
       this.hidden = false;
     }
 
+    // Insert the element
     this.renderer.appendChild(this.wrapper, this.bar);
   }
 
+  /**
+   * Measure the window and set the bars height
+   */
   private setBarHeight = () => {
     const el = this.el.nativeElement;
     this.scrollHeight = Math.round(el.scrollHeight);
@@ -206,10 +280,10 @@ export class CbjScrollbarDirective implements OnInit, AfterViewInit, AfterViewCh
       .takeUntil(this.unsubscribe)
       .subscribe(this.scrollWheel);
 
-    this.window.resizeObs.takeUntil(this.unsubscribe).subscribe(() => {
+    this.ws.resizeObs.takeUntil(this.unsubscribe).subscribe(() => {
       this.setBarHeight();
       if (this.config.isRoot) {
-        this.scroll.scrollHeight = el.offsetHeight;
+        this.ws.height = el.clientHeight;
       }
     });
 

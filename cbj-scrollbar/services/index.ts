@@ -1,4 +1,5 @@
-export * from './scrollbar.service';
-export * from './window.service';
 export * from './window.token';
+export * from './window.service';
+export * from './scrollbar.service';
+
 

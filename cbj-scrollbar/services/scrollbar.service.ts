@@ -1,13 +1,13 @@
-import { Inject, Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { WINDOW } from './window.token';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/map';
+import {WindowService} from './window.service';
 
 @Injectable()
 export class ScrollbarService implements OnDestroy {
@@ -20,7 +20,7 @@ export class ScrollbarService implements OnDestroy {
 
     private ngUnsubscribe: Subject<void> = new Subject();
 
-    constructor(@Inject(WINDOW) private window: Window) {
+    constructor(private ws: WindowService) {
         this.scrollObs = Observable.from(this.scrollSubj);
         this.childScrolling = false;
     }
@@ -53,9 +53,9 @@ export class ScrollbarService implements OnDestroy {
     public initDrag(el: HTMLElement, bar: HTMLElement): {start: Observable<any>, end: Observable<any>} {
         let observs;
 
-        const mousemove = Observable.fromEvent(this.window, 'mousemove');
+        const mousemove = Observable.fromEvent(this.ws.window, 'mousemove');
         const mousedown = Observable.fromEvent(bar, 'mousedown');
-        const mouseup = Observable.fromEvent(this.window, 'mouseup');
+        const mouseup = Observable.fromEvent(this.ws.window, 'mouseup');
 
         const mousedrag = mousedown.mergeMap((e: MouseEvent) => {
             const pageY = e.pageY;
@@ -72,10 +72,10 @@ export class ScrollbarService implements OnDestroy {
             end: mouseup
         };
 
-        if (this.window.innerWidth <= 992) {
-            const touchmove = Observable.fromEvent(this.window, 'touchmove');
+        if (this.ws.width <= 992) {
+            const touchmove = Observable.fromEvent(this.ws.window, 'touchmove');
             const touchstart = Observable.fromEvent(el, 'touchstart');
-            const touchend = Observable.fromEvent(this.window, 'touchend');
+            const touchend = Observable.fromEvent(this.ws.window, 'touchend');
 
             const touchdrag = touchstart.mergeMap((e: TouchEvent) => {
                 const pageY = e.targetTouches[0].pageY;
@@ -94,4 +94,29 @@ export class ScrollbarService implements OnDestroy {
 
         return observs;
     }
+
+  /**
+   * Get an elements distance in pixels from the top
+   *
+   * @returns {number}
+   */
+  public getElOffsetTop(el): number {
+    const viewportTop = el.nativeElement.getBoundingClientRect().top;
+    const clientTop = el.nativeElement.clientTop;
+
+    return viewportTop + this.scrollPos - clientTop;
+
+  }
+
+  /**
+   * Get an elements distance in pixels from the bottom
+   *
+   * @returns {number}
+   */
+  public getElOffsetBottom(el): number {
+    const viewportTop = el.nativeElement.getBoundingClientRect().top;
+    const clientBottom = el.nativeElement.clientTop + el.nativeElement.clientHeight;
+
+    return viewportTop + this.scrollPos - clientBottom;
+  }
 }

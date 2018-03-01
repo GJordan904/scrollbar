@@ -1,1 +1,1 @@
-export * from './scrolbar-options';
+export * from './scrolbar-config';
