@@ -5,14 +5,14 @@ are better than others.  It is a great start and just needs some minor adjustmen
 wanting to contribute, I am gladly accepting PR's.
 
 ## Table of Contents
-* [Install](#<a-name="install"></a>install)
-* [Import](#<a-name="import"></a>-import)
-* [Usage](#<a-name="usage"></a>-usage)
-** [Main Scrollbar](#<a-name="root"></a>-as-the-windows-main-scrollbar)
-** [Cards](#<a-name="cards"></a>-cards-(multiple))
-* [Config](#<a-name="config"></a>-configuration)
-* [Defaults](#<a-name="defaults"></a>-defaults)
-* [Services](#<a-name="services"></a>-services)
+* [Install](#install)
+* [Import](#import)
+* [Usage](#usage)
+    * [Main Scrollbar](#root)
+    * [Cards](#cards)
+* [Config](#config)
+* [Defaults](#defaults)
+* [Services](#services)
 
 
 ## <a name="install"></a>Install
