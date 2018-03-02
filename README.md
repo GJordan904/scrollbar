@@ -104,10 +104,6 @@ export class AppComponent implements OnInit {
 ```scss
 $navbar-height: 3.25rem;
 
-.wrapper {
-  overflow: hidden;
-}
-
 .main-content {
   height: calc(100vh - #{$navbar-height});
   width: 100%;
@@ -134,33 +130,33 @@ export class CardDemoComponent implements OnInit {
   thirdCardScroll: ScrollbarConfig;
 
   ngOnInit(): void {
-    this.firstCardScroll = new ScrollbarConfig({
-      styles: {
-        grid: [
-          { prop: 'border-top-right-radius', val: '.25rem' },
-          { prop: 'border-bottom-right-radius', val: '.25rem' },
-          { prop: 'opacity', val: '.75' },
-          { prop: 'background', val: '#1F2421' },
-        ],
-        bar: [
-          { prop: 'background', val: '#216869' }
-        ],
-      },
-      alwaysVisible: true
-    });
-
-    this.secondCardScroll = new ScrollbarConfig({styles: {bar: [{ prop: 'background', val: '#2274A5' }]}});
-
-    this.thirdCardScroll = new ScrollbarConfig({
-      styles: {
-        bar: [
-          { prop: 'opacity', val: '.65'},
-          { prop: 'background', val: '#1F2421' }
-        ]
-      },
-      alwaysVisible: true
-    });
-  }
+      this.firstCardScroll = new ScrollbarConfig({
+        styles: {
+          grid: {
+            'border-top-right-radius': '.25rem',
+            'border-bottom-right-radius': '.25rem',
+            'opacity': '.75',
+            'background': '#1F2421',
+          },
+          bar: {
+            'background': '#216869'
+          },
+        },
+        alwaysVisible: true
+      });
+  
+      this.secondCardScroll = new ScrollbarConfig({styles: {bar: {'background': '#2274A5'}}});
+  
+      this.thirdCardScroll = new ScrollbarConfig({
+        styles: {
+          bar: {
+            'opacity': '.65',
+            'background': '#1F2421'
+          }
+        },
+        alwaysVisible: true
+      });
+    }
 }
 
 ```
@@ -221,15 +217,17 @@ export interface ScrollbarOptions {
   position?: string;
   alwaysVisible?: boolean;
   visibleTimeout?: number;
+  gridOffset?: string | number;
+  barOffset?: string | number;
   toggleClasses?: Subject<{ el: string, classes: string, remove: boolean }>;
   styles?: ScrollbarStyles;
   classes?: ScrollbarClasses;
 }
 
 export interface ScrollbarStyles {
-  wrapper?: Array<{ prop: string, val: string }>;
-  grid?: Array<{ prop: string, val: string }>;
-  bar?: Array<{ prop: string, val: string }>;
+  wrapper?: { [prop: string]: string | number };
+  grid?: { [prop: string]: string | number };
+  bar?: { [prop: string]: string | number };
 }
 
 export interface ScrollbarClasses {
@@ -295,41 +293,45 @@ export const DEFAULT_SCROLLBAR: ScrollbarOptions = {
   position: 'right',
   alwaysVisible: false,
   visibleTimeout: 3000,
+  gridOffset: 0,
+  barOffset: '.5rem',
   styles: {
-    wrapper: [
-      {prop: 'width', val: '100%'},
-      {prop: 'overflow', val: 'hidden'},
-      {prop: 'display', val: 'flex'}
-    ],
-    grid: [
-      {prop: 'position', val: 'absolute'},
-      {prop: 'top', val: '0'},
-      {prop: 'bottom', val: '0'},
-      {prop: 'display', val: 'block'},
-      {prop: 'cursor', val: 'pointer'},
-      {prop: 'z-index', val: '99'},
-      {prop: 'background', val: 'transparent'},
-      {prop: 'width', val: '1rem'},
-      {prop: 'offset', val: '0'},
-      {prop: 'borderRadius', val: '0'},
-      {prop: 'margin', val: '0'},
-      {prop: 'transition', val: 'opacity 250ms ease-in-out'}
-    ],
-    bar: [
-      {prop: 'position', val: 'absolute'},
-      {prop: 'top', val: '0'},
-      {prop: 'display', val: 'block'},
-      {prop: 'cursor', val: 'pointer'},
-      {prop: 'transition', val: 'opacity 250ms ease-in-out'},
-      {prop: 'z-index', val: '100'},
-      {prop: 'offset', val: '.5rem'},
-      {prop: 'background', val: '#495057'},
-      {prop: 'width', val: '.7rem'},
-      {prop: 'borderRadius', val: '10px'},
-      {prop: 'margin', val: '0'}
-    ]
+    wrapper: {
+      'width': '100%',
+      'overflow': 'hidden',
+      'display': 'flex'
+    },
+    grid: {
+      'position': 'absolute',
+      'top': 0,
+      'bottom': 0,
+      'display': 'block',
+      'cursor': 'pointer',
+      'z-index': 99,
+      'background': 'transparent',
+      'width': '1rem',
+      'border-radius': 0,
+      'margin': 0,
+      'transition': 'opacity 250ms ease-in-out'
+    },
+    bar: {
+      'position': 'absolute',
+      'top': 0,
+      'display': 'block',
+      'cursor': 'pointer',
+      'transition': 'opacity 250ms ease-in-out',
+      'z-index': 100,
+      'background': '#495057',
+      'width': '.7rem',
+      'border-radius': '10px',
+      'margin': 0
+    }
   },
-  classes: {}
+  classes: {
+    wrapper: 'cbj-scroll-wrapper',
+    grid: 'cbj-scroll-grid',
+    bar: 'cbj-scroll-bar'
+  }
 };
 ```
 
@@ -395,10 +397,11 @@ Boolean indicating if on mobile sized display.
 ##### width
 * **Type:** `number`
 
-The width of the window.
+The width of the browsers window.
 
 
 ##### height
 * **Type:** `number`
 
-The width of the window.
+The height of the viewport. If a scrollbar has been created with isRoot set to true, this will be the height of the 
+host element, otherwiseit is the window.innerHeight property 

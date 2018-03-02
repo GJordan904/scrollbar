@@ -1,73 +1,5 @@
 import {Subject} from 'rxjs/Subject';
-
-export interface ScrollbarOptions {
-  isRoot?: boolean;
-  position?: string;
-  alwaysVisible?: boolean;
-  visibleTimeout?: number;
-  toggleClasses?: Subject<{ el: string, classes: string, remove: boolean }>;
-  styles?: ScrollbarStyles;
-  classes?: ScrollbarClasses;
-}
-
-export interface ScrollbarStyles {
-  wrapper?: Array<{ prop: string, val: string }>;
-  grid?: Array<{ prop: string, val: string }>;
-  bar?: Array<{ prop: string, val: string }>;
-}
-
-export interface ScrollbarClasses {
-  wrapper?: string;
-  grid?: string;
-  bar?: string;
-}
-
-/**
- * The default Scrollbar options
- *
- * @type {ScrollbarOptions}
- */
-export const DEFAULT_SCROLLBAR: ScrollbarOptions = {
-  isRoot: false,
-  position: 'right',
-  alwaysVisible: false,
-  visibleTimeout: 3000,
-  styles: {
-    wrapper: [
-      {prop: 'width', val: '100%'},
-      {prop: 'overflow', val: 'hidden'},
-      {prop: 'display', val: 'flex'}
-    ],
-    grid: [
-      {prop: 'position', val: 'absolute'},
-      {prop: 'top', val: '0'},
-      {prop: 'bottom', val: '0'},
-      {prop: 'display', val: 'block'},
-      {prop: 'cursor', val: 'pointer'},
-      {prop: 'z-index', val: '99'},
-      {prop: 'background', val: 'transparent'},
-      {prop: 'width', val: '1rem'},
-      {prop: 'offset', val: '0'},
-      {prop: 'borderRadius', val: '0'},
-      {prop: 'margin', val: '0'},
-      {prop: 'transition', val: 'opacity 250ms ease-in-out'}
-    ],
-    bar: [
-      {prop: 'position', val: 'absolute'},
-      {prop: 'top', val: '0'},
-      {prop: 'display', val: 'block'},
-      {prop: 'cursor', val: 'pointer'},
-      {prop: 'transition', val: 'opacity 250ms ease-in-out'},
-      {prop: 'z-index', val: '100'},
-      {prop: 'offset', val: '.5rem'},
-      {prop: 'background', val: '#495057'},
-      {prop: 'width', val: '.7rem'},
-      {prop: 'borderRadius', val: '10px'},
-      {prop: 'margin', val: '0'}
-    ]
-  },
-  classes: {}
-};
+import {DEFAULT_SCROLLBAR, ScrollbarOptions} from './scrollbar-options';
 
 /**
  * @class ScrollbarConfig
@@ -87,18 +19,34 @@ export class ScrollbarConfig {
    * @param {ScrollbarOptions} opt
    */
   constructor(opt: ScrollbarOptions) {
-    if (opt.styles) {
-      const styles = {};
-      const keys = Object.keys(opt.styles);
+    let styles = {};
+    let classes = {};
 
+    // Perform a deep merge of the styles objects if user passes any
+    if (opt.styles) {
+      const keys = Object.keys(opt.styles);
       for (const key of keys) {
-        styles[key] = [ ...DEFAULT_SCROLLBAR.styles[key], ...opt.styles[key] ];
+        styles[key] = { ...DEFAULT_SCROLLBAR.styles[key], ...opt.styles[key] };
       }
-      this.options = { ...DEFAULT_SCROLLBAR, ...opt, ...{styles} };
-      console.log(this.options);
+
+      styles = { ...DEFAULT_SCROLLBAR.styles, ...styles};
     }else {
-      this.options = { ...DEFAULT_SCROLLBAR, ...opt };
+      styles = {...DEFAULT_SCROLLBAR.styles};
     }
+
+    // Concatenate any user defined classes with the defaults
+    if (opt.classes) {
+      const keys = Object.keys(opt.classes);
+      for (const key of keys) {
+        classes[key] = `${DEFAULT_SCROLLBAR.classes[key]} ${opt.classes[key]}`;
+      }
+
+      classes = { ...DEFAULT_SCROLLBAR.classes, ...classes};
+    }else {
+      classes = {...DEFAULT_SCROLLBAR.classes};
+    }
+
+    this.options = { ...DEFAULT_SCROLLBAR, ...opt, ...{styles}, ...{classes} };
   }
 
   /**
@@ -131,6 +79,22 @@ export class ScrollbarConfig {
    */
   get visibleTimeout() {
     return this.options.visibleTimeout;
+  }
+
+  /**
+   *
+   * @returns {string | number | undefined}
+   */
+  get gridOffset() {
+    return this.options.gridOffset;
+  }
+
+  /**
+   *
+   * @returns {string | number | undefined}
+   */
+  get barOffset() {
+    return this.options.barOffset;
   }
 
   /**

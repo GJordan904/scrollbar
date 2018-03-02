@@ -163,11 +163,7 @@ export class CbjScrollbarDirective implements OnInit, AfterViewInit, AfterViewCh
     this.wrapper = this.renderer.createElement('div');
 
     // Add Classes
-    if (this.config.wClass) {
-      this.renderer.addClass(this.wrapper, this.config.wClass + ' cbj-scroll-wrapper');
-    } else {
-      this.renderer.addClass(this.wrapper, 'cbj-scroll-wrapper');
-    }
+    this.renderer.addClass(this.wrapper, this.config.wClass);
 
     // Set Dynamic Styles. Wait a tick since FF was too fast & height was still undefined
     setTimeout(() => {
@@ -176,9 +172,9 @@ export class CbjScrollbarDirective implements OnInit, AfterViewInit, AfterViewCh
     }, 0);
 
     // Set Other Styles
-    if (this.config.wStyles) {
-      for (const style of this.config.wStyles) {
-        this.renderer.setStyle(this.wrapper, style.prop, style.val);
+    for (const prop in this.config.wStyles) {
+      if (this.config.wStyles.hasOwnProperty(prop)) {
+        this.renderer.setStyle(this.wrapper, prop, this.config.wStyles[prop]);
       }
     }
 
@@ -195,17 +191,13 @@ export class CbjScrollbarDirective implements OnInit, AfterViewInit, AfterViewCh
     this.grid = this.renderer.createElement('div');
 
     // Add Classes
-    if (this.config.gClass) {
-      this.renderer.addClass(this.grid, this.config.gClass + ' cbj-scroll-grid');
-    } else {
-      this.renderer.addClass(this.grid, 'cbj-scroll-grid');
-    }
+    this.renderer.addClass(this.grid, this.config.gClass);
 
     // Set Styles
-    if (this.config.gStyles) {
-      for (const style of this.config.gStyles) {
-        const prop = style.prop === 'offset' ? this.config.position : style.prop;
-        this.renderer.setStyle(this.grid, prop, style.val);
+    this.renderer.setStyle(this.grid, this.config.position, this.config.gridOffset);
+    for (const prop in this.config.gStyles) {
+      if (this.config.gStyles.hasOwnProperty(prop)) {
+        this.renderer.setStyle(this.grid, prop, this.config.gStyles[prop]);
       }
     }
 
@@ -226,21 +218,17 @@ export class CbjScrollbarDirective implements OnInit, AfterViewInit, AfterViewCh
     this.bar = this.renderer.createElement('div');
 
     // Add Classes
-    if (this.config.bClass) {
-      this.renderer.addClass(this.bar, this.config.bClass + ' cbj-scroll-bar');
-    } else {
-      this.renderer.addClass(this.bar, 'cbj-scroll-bar');
-    }
+    this.renderer.addClass(this.bar, this.config.bClass);
 
     // Set Dynamic Styles
     const translate = this.config.position === 'right' ? 'translateX(50%)' : 'translateX(-50%)';
     this.renderer.setStyle(this.bar, 'transform', translate);
 
     // Set Other Styles
-    if (this.config.bStyles) {
-      for (const style of this.config.bStyles) {
-        const prop = style.prop === 'offset' ? this.config.position : style.prop;
-        this.renderer.setStyle(this.bar, prop, style.val);
+    this.renderer.setStyle(this.bar, this.config.position, this.config.barOffset);
+    for (const prop in this.config.bStyles) {
+      if (this.config.bStyles.hasOwnProperty(prop)) {
+        this.renderer.setStyle(this.bar, prop, this.config.bStyles[prop]);
       }
     }
 
