@@ -1,0 +1,8 @@
+.table-light {
+
+  &.table-hover {
+    @include hover {
+      background-color: darken($snow, 7%);
+    }
+  }
+}

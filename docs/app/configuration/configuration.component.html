@@ -1,0 +1,151 @@
+<div class="row">
+  <div class="jumbotron jumbotron-fluid text-white bg-secondary w-100">
+    <div class="row justify-content-center w-100">
+      <h1 class="text-center">
+        Configuration
+      </h1>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid py-4">
+  <h2>Overview</h2>
+  <p class="lead">
+    No matter what, a ScrollbarConfig object must be instantiated. If you want to go with a zero config you can pass
+    an empty object to the configs constructor but a ScrollbarConfig object must be passed to the directive.
+  </p>
+
+  <p>
+    The ScrollbarConfig takes a single parameter using the ScrollbarOptions interface. All properties are optional
+    and will be merged with the package defined defaults.
+  </p>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="card bg-secondary text-white mt-4">
+        <div class="card-header">
+          <h2>Interfaces</h2>
+        </div>
+        <div class="card-body">
+          <pre><code [cbjHighlight]="configCode" [innerHTML]="configCode.code"></code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="card bg-primary text-white mt-4">
+        <div class="card-header">
+          <h2>Defaults</h2>
+        </div>
+        <div class="card-body">
+          <pre><code [cbjHighlight]="defaultCode" [innerHTML]="defaultCode.code"></code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="card bg-primary mt-4">
+        <div class="card-header">
+          <h2 class="text-white">Details</h2>
+        </div>
+        <div class="card-body">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Option</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>isRoot</td>
+                <td>boolean</td>
+                <td>false</td>
+                <td>
+                  Flag to set when the scrollbar is used as the main windows scrollbar.
+                  Setting isRoot to true does the following things:
+                  <ul>
+                    <li>Prevents the main window from scrolling if an inner window is scrolling.</li>
+                    <li>Creates an observable that broadcasts the current scroll position on scroll.</li>
+                    <li>Sets the scroll position and height on the ScrollbarService</li>
+                    <li>If the RouterModule is present it will listen for Route changes and scroll to top on route change</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>position</td>
+                <td>string</td>
+                <td>'right'</td>
+                <td>
+                  The position of the scrollbar. Valid options are 'right' and 'left'.
+                </td>
+              </tr>
+              <tr>
+                <td>alwaysVisible</td>
+                <td>boolean</td>
+                <td>false</td>
+                <td>
+                  Boolean setting whether the scrollbar hides after a timeout.
+                </td>
+              </tr>
+              <tr>
+                <td>visibleTimeout</td>
+                <td>number</td>
+                <td>3000</td>
+                <td>
+                  The timeout in milliseconds for hiding the scrollbar.
+                </td>
+              </tr>
+              <tr>
+                <td>barOffset</td>
+                <td>string | number</td>
+                <td>'.5rem'</td>
+                <td>
+                  The bars offset. Must be a valid css value for the left or right property.
+                </td>
+              </tr>
+              <tr>
+                <td>gridOffset</td>
+                <td>string | number</td>
+                <td>0</td>
+                <td>
+                  The grids offset. Must be a valid css value for the left or right property.
+                </td>
+              </tr>
+              <tr>
+                <td>toggleClasses</td>
+                <td>Subject<&#123; el: string, classes: string, remove: boolean &#125;></td>
+                <td>undefined</td>
+                <td>
+                  A Subject that can be used to toggle classes on the wrapper, grid, or bar elements.
+                </td>
+              </tr>
+              <tr>
+                <td>styles</td>
+                <td>ScrollbarStyles</td>
+                <td>See Above</td>
+                <td>
+                  The ScrollbarStyles interface has a key for each the wrapper, grid, and bar element, each of which takes an object with
+                  valid css properties as keys with either string or number values.
+                </td>
+              </tr>
+              <tr>
+                <td>classes</td>
+                <td>ScrollbarClasses</td>
+                <td>See Above</td>
+                <td>The ScrollbarClasses interface has a key for each the wrapper, grid, and bar element that accept a string of class(es) to
+                  be applied to the element.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

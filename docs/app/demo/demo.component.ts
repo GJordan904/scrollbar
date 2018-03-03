@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {ScrollbarOptions, ScrollbarConfig} from '@codebyjordan/scrollbar';
+import { Component, OnInit } from '@angular/core';
+import {ScrollbarConfig} from '@codebyjordan/scrollbar';
 
 @Component({
-  selector: 'cbj-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: 'cbj-demo',
+  templateUrl: './demo.component.html',
+  styleUrls: ['./demo.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class DemoComponent implements OnInit {
   firstCardScroll: ScrollbarConfig;
   secondCardScroll: ScrollbarConfig;
   thirdCardScroll: ScrollbarConfig;
@@ -17,11 +17,11 @@ export class HomeComponent implements OnInit {
         grid: {
           'border-top-right-radius': '.25rem',
           'border-bottom-right-radius': '.25rem',
-          'opacity': '.5',
+          'opacity': '.75',
           'background': '#1F2421',
         },
         bar: {
-          'background': '#F8333C'
+          'background': '#216869'
         },
       },
       alwaysVisible: true

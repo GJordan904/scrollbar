@@ -24,7 +24,7 @@ import { CbjScrollbarModule } from '@codebyjordan/scrollbar';
 @NgModule({
   imports: [
     BrowserModule,
-    CbjScrollbarModule.forRoot()
+    CbjScrollbarModule.forRoot() // Only use forRoot in your root module
   ],
   providers: [],
   bootstrap: [AppComponent]
@@ -33,24 +33,22 @@ export class AppModule { }`
   };
   templateCode = {
     language: 'markup',
-    code: `<div class="container-fluid wrapper">
-    <div class="row">
-        <nav class="navbar cbj-elevation-3 navbar-expand navbar-dark bg-primary w-100">
-            ...
-        </nav>
-    </div>
-
-    <div class="row">
+    code: `<div class="row"> <!-- This element will be made position: relative
+    
+      <!-- cbj-scroll-wrapper open tag will be inserted here -->
         <div class="main-content" [cbjScrollbar]="mainScrollbar">
             <router-outlet></router-outlet>
         </div>
-    </div>
+        <!-- cbj-scroll-grid element will be inserted here -->
+        <!-- cbj-scroll-bar element will be inserted here -->
+      <!-- cbj-scroll-wrapper close tag will be inserted here -->  
+      
 </div>`
   };
   componentCode = {
     language: 'typescript',
     code: `import { Component } from '@angular/core';
-import {ScrollbarOptions} from '@codebyjordan/scrollbar';
+import {ScrollbarConfig} from '@codebyjordan/scrollbar';
 
 @Component({
   selector: 'app-root',
@@ -58,24 +56,20 @@ import {ScrollbarOptions} from '@codebyjordan/scrollbar';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  mainScrollbar: ScrollbarOptions = {
-    isRoot: true,
-    alwaysVisible: true
-  };
+  mainScrollbar: ScrollbarConfig;
+
+  ngOnInit() {
+    this.mainScrollbar = new ScrollbarConfig({
+      isRoot: true,
+      alwaysVisible: true
+    });
+  }
 }`
   };
   stylesCode = {
     language: 'scss',
-    code: `@import '~bootstrap/scss/bootstrap';
-
+    code: `
 $navbar-height: 3.25rem;
-
-.navbar {
-  height: $navbar-height;
-}     
-.wrapper {
-  overflow: hidden;
-}
 
 .main-content {
   height: calc(100vh - #{$navbar-height});

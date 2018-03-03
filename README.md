@@ -240,7 +240,7 @@ export interface ScrollbarClasses {
 * **Type:** boolean
 * **Default:** false
 
-You should set this to true when using the directive as the main scrollbar. It activates features unique to that use case.
+Flag to set when the scrollbar is used as the main windows scrollbar
 Setting isRoot to true does the following things:  
 * Prevents the main window from scrolling if an inner window is scrolling.
 * Creates an observable that broadcasts the current scroll position on scroll.
@@ -265,6 +265,18 @@ Boolean setting whether the scrollbar hides after a timeout.
 
 The timeout in milliseconds for hiding the scrollbar.
 
+#### barOffset
+* **Type:** `number | string`
+* **Default:** `'.5rem''`
+
+The bars offset. Must be a valid css value for the left or right property.
+
+#### gridOffset
+* **Type:** `number | string`
+* **Default:** `0`
+
+The grids offset. Must be a valid css value for the left or right property.
+
 #### toggleClasses
 * **Type:** `Subject<{ el: string, classes: string, remove: boolean }>`
 * **Default:** `undefined`
@@ -275,9 +287,8 @@ A Subject that can be used to toggle classes on the wrapper, grid, or bar elemen
 * **Type:** `ScrollbarStyles`
 * **Default:** `See Below`
 
-A ScrollbarStyles object can hold an array of styles properties stored as`{prop: string, val: string}` objects. The ScrollbarStyles 
-interface has a key for each the wrapper, grid, and bar element, each of which can take an array of styles. Any valid 
-css property can be passed with a valid value as a string.
+The ScrollbarStyles interface has a key for each the wrapper, grid, and bar element, each of which takes an object with
+valid css properties as keys with either string or number values.
 
 #### classes
 * **Type:** `ScrollbarClasses`
@@ -339,8 +350,9 @@ export const DEFAULT_SCROLLBAR: ScrollbarOptions = {
 The package provides 2 services and an Injectable token.
 
 ### ScrollbarService
-The scrollbar service provides an observable that broadcasts the scroll position on scroll and public properties with the scroll position
-and scroll height.
+The scrollbar service provides a convenient way of interacting with the scrollbar and, mainly, getting information about
+like scroll position, scroll height, and an elements distance from the top or bottom. Internally, the service is used by the
+directive to create Observables for responding to the mouse wheel and drag events. 
 
 #### Properties
 The ScrollbarService properties
@@ -348,7 +360,7 @@ The ScrollbarService properties
 ##### scrollObs
 * **Type:** `Observable<number>`
 
-Subscribe to this observable to watch scrolling and get the scroll position.
+Observable of the scroll event. Broadcasts current scroll position on update.
 
 ##### scrollPos
 * **Type:** `number`
@@ -358,7 +370,7 @@ The current scroll position.
 ##### scrollHeight
 * **Type:** `number`
 
-The height of the root scrollbars window.
+The scrollHeight of the root scrollbars element or document.documentElement.scrollHeight if no root scrollbar.
 
 ##### childScrolling
 * **Type:** `boolean`

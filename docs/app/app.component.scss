@@ -1,9 +1,5 @@
 @import "../scss/variables";
 
-.wrapper {
-  overflow: hidden;
-}
-
 .main-content {
   height: calc(100vh - #{$navbar-height});
   width: 100%;
