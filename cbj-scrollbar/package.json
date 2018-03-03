@@ -2,7 +2,7 @@
   "name": "@codebyjordan/scrollbar",
   "description": "Angular 5 directive and services that provide cross browser customizable scrollbars.",
   "keywords": ["scrollbar", "angular 5", "typescript"],
-  "version": "2.0.0",
+  "version": "2.1.1",
   "repository": "https://github.com/GJordan904/scrollbar.git",
   "author": "Grant Jordan <grant@codebyjordan.com>",
   "license": "MIT",
