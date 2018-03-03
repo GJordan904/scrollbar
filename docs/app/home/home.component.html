@@ -1,144 +1,104 @@
 <div class="row">
     <div class="jumbotron jumbotron-fluid text-white bg-secondary w-100">
         <div class="row justify-content-center w-100">
-            <h1 class="text-center">
-                Customizable Scrollbar
-                <span class="sub">Angular 5 Directive & Service</span>
-            </h1>
+            <div class="col-12">
+                <h1 class="text-center">
+                    CBJ Scrollbar
+                    <span class="sub">Make the Scrollbar Match the Theme</span>
+                </h1>
+            </div>
+            <div class="col-12 d-flex justify-content-center">
+                <a routerLink="/getting-started" class="btn raised btn-primary mt-5 mr-2">
+                    Get Started
+                </a>
+                <a class="btn raised btn-info mt-5 mx-2"
+                   href="https://github.com/gjordan904/scrollbar"
+                   target="_blank"
+                >
+                    Github
+                </a>
+                <a class="btn raised btn-danger mt-5 ml-2"
+                   href="https://www.npmjs.com/package/@codebyjordan/scrollbar"
+                   target="_blank"
+                >
+                    NPM
+                </a>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="container py-4">
-    <div class="row">
-        <div class="col">
+<div class="container-fluid home-content">
+    <div class="row align-items-center py-5 bg-primary">
+        <div class="col-5">
             <div class="card scroll-card">
                 <div class="card-body" [cbjScrollbar]="firstCardScroll">
-                    <h2 class="card-title">Fully Customizable</h2>
-                    <p class="card-text">Now you can have the scrollbar you have always wanted and on all browsers and
-                        devices. Match your sites colors, auto hide the scrollbar, make it rounded, let your imagination
-                        go wild. No longer are you constrained by the browser or platform.</p>
-
-                    <p>Vivamus vel quam sed mauris porta posuere non sit amet velit. Fusce sit amet laoreet ligula. Duis
-                        convallis consequat ex et tempus. Pellentesque nec semper purus. Pellentesque malesuada sodales
-                        ligula vitae ornare. Fusce eget lectus finibus diam volutpat tempor. Nam non lectus ultrices,
-                        posuere quam sit amet, dignissim justo. Sed semper, metus quis elementum fringilla, metus odio
-                        vehicula eros, vel dictum nisl lectus congue nulla. Suspendisse vitae dolor magna. Sed dignissim
-                        a metus vel hendrerit. Praesent ultrices erat et ante vestibulum tincidunt. Fusce fringilla leo
-                        vitae quam eleifend, vel tempor erat euismod. Donec purus purus, interdum quis erat vel, aliquam
-                        tempus diam. Sed efficitur purus eu metus sollicitudin, dapibus pretium odio mattis. Cras id
-                        urna ipsum. Suspendisse ullamcorper odio est, ut consequat ipsum eleifend eget.</p>
-
-                    <p>Phasellus nec augue id ex sodales convallis. Nam eu neque consectetur, elementum metus quis,
-                        egestas lacus. In hac habitasse platea dictumst. Vestibulum vel arcu tortor. Maecenas lorem
-                        mauris, interdum sed mi nec, pellentesque pellentesque mi. Praesent nibh ex, tempor eget sapien
-                        non, malesuada pellentesque risus. Sed mollis, purus nec semper sollicitudin, metus sem volutpat
-                        risus, id condimentum diam nibh mattis orci. Sed sodales est consectetur mi molestie luctus at
-                        sed nisl. Suspendisse convallis lorem et sem facilisis, eu venenatis dolor maximus. Aenean dolor
-                        eros, viverra quis pulvinar quis, maximus vitae urna. Praesent tempor pulvinar eros, euismod
-                        semper mauris posuere eu.</p>
-
-                    <p>In eu elit vel augue eleifend lacinia non id purus. Nam ex diam, imperdiet ut dictum at, viverra
-                        in risus. Donec fermentum diam sed magna suscipit, et faucibus mi aliquam. Aenean aliquam
-                        facilisis mattis. Sed sed mi eros. Pellentesque habitant morbi tristique senectus et netus et
-                        malesuada fames ac turpis egestas. Integer sem magna, aliquam et vestibulum nec, sagittis id
-                        metus. Nam massa quam, vehicula imperdiet arcu finibus, varius bibendum felis.</p>
-
-                    <p>Nulla pulvinar, ex nec egestas elementum, magna tortor tristique nisl, euismod pharetra justo
-                        massa non mauris. Phasellus et lobortis est. Phasellus sem orci, efficitur a mauris eget,
-                        sagittis interdum lacus. Maecenas sollicitudin porta sodales. Vestibulum gravida dui a massa
-                        bibendum, eget tincidunt ligula interdum. Curabitur a dapibus risus. Aliquam aliquam imperdiet
-                        felis ac ultrices.</p>
+                    <h3 class="card-title">Check Me Out!</h3>
+                    <p class="card-text">If you can do it with CSS then you can do it with CBJ Scrollbar.</p>
+                    <div style="height: 750px"></div>
                 </div>
             </div>
         </div>
+
+        <div class="col-7 text-white">
+            <h2>Fully Customizable</h2>
+            <p>
+                Since the directive prevents the browser from rendering a scrollbar and instead draws one, we are able
+                to fully control the look through css properties. Properties can be set either through a convenient
+                <a routerLink="/configuration">configuration object</a>, or added via some
+                <a routerLink="/getting-started#styles">css classes</a>.
+            </p>
+        </div>
     </div>
 
-    <div class="row">
-        <div class="col">
-            <div class="card mt-4 scroll-card bg-secondary text-white">
+    <div class="row align-items-center py-5">
+        <div class="col-7">
+            <h2>Angular Package Format</h2>
+            <p>
+                This package has been built with <a target="_blank" href="https://github.com/dherges/ng-packagr">ng-packagr</a> and meets the APF
+                specs. It has been successfully tested with AOT compilation and can integrate easily into a project.
+            </p>
+        </div>
+
+        <div class="col-5">
+            <div class="card bg-secondary scroll-card text-white">
                 <div class="card-body" [cbjScrollbar]="secondCardScroll">
-                    <h2 class="card-title">Multiple Bars Multiple Styles</h2>
-                    <p class="card-text">Have a different look for different components or share a config for a uniform
-                        look, either way, it's totally up to you and accomplished through a simple config object.</p>
-
-                    <p>Vivamus vel quam sed mauris porta posuere non sit amet velit. Fusce sit amet laoreet ligula. Duis
-                        convallis consequat ex et tempus. Pellentesque nec semper purus. Pellentesque malesuada sodales
-                        ligula vitae ornare. Fusce eget lectus finibus diam volutpat tempor. Nam non lectus ultrices,
-                        posuere quam sit amet, dignissim justo. Sed semper, metus quis elementum fringilla, metus odio
-                        vehicula eros, vel dictum nisl lectus congue nulla. Suspendisse vitae dolor magna. Sed dignissim
-                        a metus vel hendrerit. Praesent ultrices erat et ante vestibulum tincidunt. Fusce fringilla leo
-                        vitae quam eleifend, vel tempor erat euismod. Donec purus purus, interdum quis erat vel, aliquam
-                        tempus diam. Sed efficitur purus eu metus sollicitudin, dapibus pretium odio mattis. Cras id
-                        urna ipsum. Suspendisse ullamcorper odio est, ut consequat ipsum eleifend eget.</p>
-
-                    <p>Phasellus nec augue id ex sodales convallis. Nam eu neque consectetur, elementum metus quis,
-                        egestas lacus. In hac habitasse platea dictumst. Vestibulum vel arcu tortor. Maecenas lorem
-                        mauris, interdum sed mi nec, pellentesque pellentesque mi. Praesent nibh ex, tempor eget sapien
-                        non, malesuada pellentesque risus. Sed mollis, purus nec semper sollicitudin, metus sem volutpat
-                        risus, id condimentum diam nibh mattis orci. Sed sodales est consectetur mi molestie luctus at
-                        sed nisl. Suspendisse convallis lorem et sem facilisis, eu venenatis dolor maximus. Aenean dolor
-                        eros, viverra quis pulvinar quis, maximus vitae urna. Praesent tempor pulvinar eros, euismod
-                        semper mauris posuere eu.</p>
-
-                    <p>In eu elit vel augue eleifend lacinia non id purus. Nam ex diam, imperdiet ut dictum at, viverra
-                        in risus. Donec fermentum diam sed magna suscipit, et faucibus mi aliquam. Aenean aliquam
-                        facilisis mattis. Sed sed mi eros. Pellentesque habitant morbi tristique senectus et netus et
-                        malesuada fames ac turpis egestas. Integer sem magna, aliquam et vestibulum nec, sagittis id
-                        metus. Nam massa quam, vehicula imperdiet arcu finibus, varius bibendum felis.</p>
-
-                    <p>Nulla pulvinar, ex nec egestas elementum, magna tortor tristique nisl, euismod pharetra justo
-                        massa non mauris. Phasellus et lobortis est. Phasellus sem orci, efficitur a mauris eget,
-                        sagittis interdum lacus. Maecenas sollicitudin porta sodales. Vestibulum gravida dui a massa
-                        bibendum, eget tincidunt ligula interdum. Curabitur a dapibus risus. Aliquam aliquam imperdiet
-                        felis ac ultrices.</p>
+                    <h3 class="card-title">Where am I ?!</h3>
+                    <p class="card-text">
+                        Auto hide the scrollbar and control the visibility timeout, all through a simple
+                        to use config class.
+                    </p>
+                    <div style="height: 750px"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col">
-            <div class="card mt-4 scroll-card bg-primary text-white">
+    <div class="row align-items-center bg-dark py-5">
+        <div class="col-5">
+            <div class="card bg-success scroll-card text-white">
                 <div class="card-body" [cbjScrollbar]="thirdCardScroll">
-                    <h2 class="card-title">Subscribable Service</h2>
-                    <p class="card-text">Many times an application will need to listen for the scroll event or get the
-                        scroll position. This can be accomplished through subscribing to the scroll observable on the
-                        ScrollbarService</p>
-
-                    <p>Vivamus vel quam sed mauris porta posuere non sit amet velit. Fusce sit amet laoreet ligula. Duis
-                        convallis consequat ex et tempus. Pellentesque nec semper purus. Pellentesque malesuada sodales
-                        ligula vitae ornare. Fusce eget lectus finibus diam volutpat tempor. Nam non lectus ultrices,
-                        posuere quam sit amet, dignissim justo. Sed semper, metus quis elementum fringilla, metus odio
-                        vehicula eros, vel dictum nisl lectus congue nulla. Suspendisse vitae dolor magna. Sed dignissim
-                        a metus vel hendrerit. Praesent ultrices erat et ante vestibulum tincidunt. Fusce fringilla leo
-                        vitae quam eleifend, vel tempor erat euismod. Donec purus purus, interdum quis erat vel, aliquam
-                        tempus diam. Sed efficitur purus eu metus sollicitudin, dapibus pretium odio mattis. Cras id
-                        urna ipsum. Suspendisse ullamcorper odio est, ut consequat ipsum eleifend eget.</p>
-
-                    <p>Phasellus nec augue id ex sodales convallis. Nam eu neque consectetur, elementum metus quis,
-                        egestas lacus. In hac habitasse platea dictumst. Vestibulum vel arcu tortor. Maecenas lorem
-                        mauris, interdum sed mi nec, pellentesque pellentesque mi. Praesent nibh ex, tempor eget sapien
-                        non, malesuada pellentesque risus. Sed mollis, purus nec semper sollicitudin, metus sem volutpat
-                        risus, id condimentum diam nibh mattis orci. Sed sodales est consectetur mi molestie luctus at
-                        sed nisl. Suspendisse convallis lorem et sem facilisis, eu venenatis dolor maximus. Aenean dolor
-                        eros, viverra quis pulvinar quis, maximus vitae urna. Praesent tempor pulvinar eros, euismod
-                        semper mauris posuere eu.</p>
-
-                    <p>In eu elit vel augue eleifend lacinia non id purus. Nam ex diam, imperdiet ut dictum at, viverra
-                        in risus. Donec fermentum diam sed magna suscipit, et faucibus mi aliquam. Aenean aliquam
-                        facilisis mattis. Sed sed mi eros. Pellentesque habitant morbi tristique senectus et netus et
-                        malesuada fames ac turpis egestas. Integer sem magna, aliquam et vestibulum nec, sagittis id
-                        metus. Nam massa quam, vehicula imperdiet arcu finibus, varius bibendum felis.</p>
-
-                    <p>Nulla pulvinar, ex nec egestas elementum, magna tortor tristique nisl, euismod pharetra justo
-                        massa non mauris. Phasellus et lobortis est. Phasellus sem orci, efficitur a mauris eget,
-                        sagittis interdum lacus. Maecenas sollicitudin porta sodales. Vestibulum gravida dui a massa
-                        bibendum, eget tincidunt ligula interdum. Curabitur a dapibus risus. Aliquam aliquam imperdiet
-                        felis ac ultrices.</p>
+                    <h3 class="card-title">Observe the Scroll</h3>
+                    <p class="card-text">
+                        Use the provided ScrollService to check the current scroll position or better yet, subscribe
+                        to the scroll Observable. As a convenience, there is also the WindowService that provides the
+                        Window object, a resize Observable, and
+                    </p>
+                    <div style="height: 750px"></div>
                 </div>
             </div>
         </div>
+
+        <div class="col-7 text-white">
+            <h2>Cross Browser</h2>
+            <p>
+                The main objective of this project is to provide a browser and device agnostic custom scrollbar solution.
+                I have tried, and will continue, my best to make it function across the major browsers
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <cbj-footer class="w-100"></cbj-footer>
     </div>
 </div>
-

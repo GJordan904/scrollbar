@@ -258,6 +258,11 @@ export class CbjScrollbarDirective implements OnInit, AfterViewInit, AfterViewCh
     if (dif < 2 || !this.config.alwaysVisible || this.hidden) {
       this.showHideBarGrid();
     }
+
+    if (this.config.isRoot) {
+      this.ws.height = el.clientHeight;
+      this.scroll.scrollHeight = this.scrollHeight;
+    }
   }
 
   private subscribe(): void {
@@ -268,12 +273,7 @@ export class CbjScrollbarDirective implements OnInit, AfterViewInit, AfterViewCh
       .takeUntil(this.unsubscribe)
       .subscribe(this.scrollWheel);
 
-    this.ws.resizeObs.takeUntil(this.unsubscribe).subscribe(() => {
-      this.setBarHeight();
-      if (this.config.isRoot) {
-        this.ws.height = el.clientHeight;
-      }
-    });
+    this.ws.resizeObs.takeUntil(this.unsubscribe).subscribe(this.setBarHeight);
 
     drag.start.takeUntil(this.unsubscribe).subscribe(this.dragStart);
 

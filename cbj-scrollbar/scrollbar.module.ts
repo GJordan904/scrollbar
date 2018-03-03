@@ -9,11 +9,6 @@ import { CbjScrollbarDirective } from './directives/scrollbar.directive';
   imports: [
     CommonModule
   ],
-  providers: [
-    { provide: WINDOW, useFactory: _window },
-    WindowService,
-    ScrollbarService
-  ],
   declarations: [
     CbjScrollbarDirective
   ],

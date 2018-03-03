@@ -10,105 +10,228 @@
 </div>
 
 <div class="container-fluid py-4">
-    <h2>Let's Get Started</h2>
+    <h2>First things first</h2>
     <p>
-        The code used below comes from this site and is used to make the main scrollbar. It is a very basic setup and
-        uses the defaults for most options. I am using Bootstrap 4 styles in addition to the styles below.
+        We need to install and import the package. Easiest way will be with npm but if you would rather tinker a bit then
+        go ahead and grab the source. Once you have done that, you will need to import the package into the root module
+        using the forRoot method. Be sure not to use forRoot in any lazy-loaded modules, just import CbjScrollbarModule
+        in that case.
     </p>
-    <p>
-        With the code below you should be well on your way, just tweak the settings and see what you get. However,
-        for more detailed explanation of the different options, see the <a routerLink="/usage">usage</a> section.
-    </p>
-    <div class="card-deck">
-        <div class="card bg-primary text-white mt-4">
-            <div class="card-header">
-                <h2>Install</h2>
-            </div>
-            <div class="card-body">
-                <h4 class="card-title">With NPM</h4>
-                <pre><code [cbjHighlight]="installCode" [innerHTML]="installCode.code"></code></pre>
-
-                <h4 class="card-title mt-4">Build Source</h4>
-                <ol class="spaced-list">
-                    <li>Clone the Repo: <a class="btn btn-secondary" href="https://github.com/gjordan904/cbj-ui" target="_blank"><span class="dev-icon github tiny"></span></a></li>
-                    <li>Navigate to the root of the repo.</li>
-                    <li>Run <pre><code [cbjHighlight]="buildCode" [innerHTML]="buildCode.code"></code></pre></li>
-                    <li>Copy the newly created dist/ui directory into a location that will be resolved by webpack</li>
-                    <li>You should now be able to use the package as outlined below</li>
-                </ol>
-            </div>
-        </div>
-
-        <div class="card bg-secondary text-white mt-4">
-            <div class="card-header">
-                <h2>Import</h2>
-            </div>
-            <div class="card-body">
-                <pre><code [cbjHighlight]="importCode" [innerHTML]="importCode.code"></code></pre>
-            </div>
-        </div>
-    </div>
-
-    <div class="card-deck">
-        <div class="card bg-secondary text-white mt-4">
-            <div class="card-header">
-                <h2>Template</h2>
-            </div>
-            <div class="card-body">
-                <pre><code [cbjHighlight]="templateCode" [innerHTML]="templateCode.code"></code></pre>
-            </div>
-        </div>
-
-        <div class="card bg-primary text-white mt-4">
-            <div class="card-header">
-                <h2>Component</h2>
-            </div>
-            <div class="card-body">
-                <pre><code [cbjHighlight]="componentCode" [innerHTML]="componentCode.code"></code></pre>
-            </div>
-        </div>
-    </div>
-
     <div class="row">
-        <div class="col">
+        <div class="col-lg-6">
+            <div class="card bg-primary text-white mt-4">
+                <div class="card-header">
+                    <h2>Install</h2>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">With NPM</h4>
+                    <pre><code [cbjHighlight]="installCode" [innerHTML]="installCode.code"></code></pre>
+
+                    <h4 class="card-title mt-4">Build Source</h4>
+                    <ol class="spaced-list">
+                        <li>Clone the Repo: <a class="btn btn-secondary" href="https://github.com/gjordan904/cbj-ui" target="_blank"><span class="dev-icon github tiny"></span></a></li>
+                        <li>Navigate to the root of the repo.</li>
+                        <li>Run <pre><code [cbjHighlight]="buildCode" [innerHTML]="buildCode.code"></code></pre></li>
+                        <li>Copy the newly created dist/scrollbar directory into a location that will be resolved by webpack and adjust your imports accordingly</li>
+                        <li>You should now be able to use the package as outlined below</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card bg-secondary text-white mt-4">
+                <div class="card-header">
+                    <h2>Import</h2>
+                </div>
+                <div class="card-body">
+                    <pre><code [cbjHighlight]="importCode" [innerHTML]="importCode.code"></code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="mt-5">A Simple Implementation</h2>
+    <p>
+        This is the code for the main scrollbar on this site. I added some comments to the template to help to visualize
+        what the directive is doing.
+    </p>
+    <p>
+        The configuration in the component is extremely simple but demonstrates the basics of
+        setting up the scrollbar. You must create a ScrollbarConfig object to pass to the directive. This is where you
+        will <a routerLink="/configuration">configure the scrollbar</a>
+    </p>
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card bg-secondary text-white mt-4">
+                <div class="card-header">
+                    <h2>Template</h2>
+                </div>
+                <div class="card-body">
+                    <pre><code [cbjHighlight]="templateCode" [innerHTML]="templateCode.code"></code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-6">
+            <div class="card bg-primary text-white mt-4">
+                <div class="card-header">
+                    <h2>Component</h2>
+                </div>
+                <div class="card-body">
+                    <pre><code [cbjHighlight]="componentCode" [innerHTML]="componentCode.code"></code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
             <div class="card bg-primary mt-4 text-white">
                 <div class="card-header">
-                    <h2>Styles</h2>
+                    <h2 id="styles">Styles</h2>
                 </div>
                 <div class="container-fluid py-3">
                     <div class="row align-items-center">
-                        <div class="col-4">
-                            <h4 class="card-title">Considerations & Tips</h4>
-                            <ul>
-                                <li>Directive must be placed on an element with a set height</li>
-                                <li>The parent element will have its position set to relative</li>
-                                <li>Consider setting the wrapper, grid, and bar styles in the config</li>
-                                <li>Styles set in the config override all other styles, including those set internally</li>
-                                <li>Depending on your layout it may be necessary to set a parent or grandparent container to
-                                    overflow hidden to prevent browser scrollbar from appearing</li>
-                            </ul>
-
+                        <div class="col-lg-6">
                             <h4 class="card-title">Classes</h4>
                             <ul>
                                 <li>
-                                    <pre class="d-inline p-1"><code><span class="token variable">cbj-scroll-wrapper</span></code></pre>
-                                    : The scroll wrapper is an element created by the directive that wraps the element
+                                    <pre class="d-inline p-1"><code><span class="token variable">cbj-scroll-wrapper</span></code></pre>:
+                                    The scroll wrapper is an element created by the directive that wraps the element
                                     containing the directive and the created scrollbar and grid.
                                 </li>
                                 <li class="mt-3">
-                                    <pre class="d-inline p-1"><code><span class="token variable">cbj-scroll-grid</span></code></pre></li>: The scroll grid is the container of the scrollbar. It wil stretch from the top of
+                                    <pre class="d-inline p-1"><code><span class="token variable">cbj-scroll-grid</span></code></pre>:
+                                    The scroll grid is the container of the scrollbar. It wil stretch from the top of
                                     the scroll wrapper to the bottom.
                                 <li class="mt-3">
-                                    <pre class="d-inline p-1"><code><span class="token variable">cbj-scroll-bar</span></code></pre>
-                                    : The scrollbar itself.
+                                    <pre class="d-inline p-1"><code><span class="token variable">cbj-scroll-bar</span></code></pre>:
+                                The scrollbar itself.
                                 </li>
                             </ul>
                         </div>
 
-                        <div class="col-8">
+                        <div class="col-lg-6">
                             <pre><code [cbjHighlight]="stylesCode" [innerHTML]="stylesCode.code"></code></pre>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="mt-5">Services</h2>
+    <p>
+        This package provides 2 services, the ScrollbarService and the WindowService. Together they allow observing the
+        scroll position, getting the accurate window height, and more.
+    </p>
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card bg-secondary mt-4">
+                <div class="card-header text-white">
+                    <h2>ScrollbarService</h2>
+                </div>
+                <div class="card-body">
+                    <p class="text-white">
+                        The ScrollbarService provides a convenient way of interacting with the scrollbar and, mainly, getting information about
+                        scroll position, scroll height, and an elements distance from the top or bottom.
+                    </p>
+                    <table class="table table-hover table-responsive">
+                        <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>scrollObs</td>
+                                <td>Observable&lt;number&gt;</td>
+                                <td>Observable of the scroll event. Broadcasts current scroll position on update.</td>
+                            </tr>
+                            <tr>
+                                <td>scrollPos</td>
+                                <td>number</td>
+                                <td>The current scroll position</td>
+                            </tr>
+                            <tr>
+                                <td>childScrolling</td>
+                                <td>boolean</td>
+                                <td>Flag indicating whether a non root element is being scrolled.</td>
+                            </tr>
+                            <tr>
+                                <td>scrollHeight</td>
+                                <td>number</td>
+                                <td>The scrollHeight of the root scrollbars element or document.documentElement.scrollHeight if no root scrollbar.</td>
+                            </tr>
+                            <tr>
+                                <th>Method</th>
+                                <th>Params</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>getElOffsetTop</td>
+                                <td>el: ElementRef</td>
+                                <td>Distance in pixels element is from top<br>@returns number</td>
+                            </tr>
+                            <tr>
+                                <td>getElOffsetBottom</td>
+                                <td>el: ElementRef</td>
+                                <td>Distance in pixels element is from bottom<br>@returns number</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-6">
+            <div class="card bg-primary mt-4">
+                <div class="card-header">
+                    <h2 class="text-white">WindowService</h2>
+                </div>
+                <div class="card-body">
+                    <p class="text-white">
+                        The WindowService provides access to the browsers window object, an observable of the resizeEvent,
+                        and a height property that is set dependant on whether a root scrollbar is enabled.
+                    </p>
+                    <table class="table table-hover table-responsive">
+                        <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>window</td>
+                            <td>Window</td>
+                            <td>The browsers window object.</td>
+                        </tr>
+                        <tr>
+                            <td>resizeObs</td>
+                            <td>Observable&lt;any&gt;</td>
+                            <td>Observable of the window resize event.</td>
+                        </tr>
+                        <tr>
+                            <td>isMobile</td>
+                            <td>boolean</td>
+                            <td>Flag indicating whether the window is mobile size</td>
+                        </tr>
+                        <tr>
+                            <td>height</td>
+                            <td>number</td>
+                            <td>The height of the root scrollbars element or window.innerHeight if no root scrollbar.</td>
+                        </tr>
+                        <tr>
+                            <td>width</td>
+                            <td>number</td>
+                            <td>The value of window.innerWidth</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
