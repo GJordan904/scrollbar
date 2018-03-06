@@ -19,6 +19,18 @@ export class ScrollbarConfig {
    * @param {ScrollbarOptions} opt
    */
   constructor(opt: ScrollbarOptions) {
+    this.mergeOptions(opt, true);
+  }
+
+  /**
+   * Merge the defaults and options by performing a deep merge
+   *
+   * @param {ScrollbarOptions} opt
+   * @param {boolean} construct
+   *
+   * @return {ScrollbarOptions}
+   */
+  mergeOptions(opt: ScrollbarOptions, construct: boolean = false) {
     let styles = {};
     let classes = {};
 
@@ -46,7 +58,12 @@ export class ScrollbarConfig {
       classes = {...DEFAULT_SCROLLBAR.classes};
     }
 
-    this.options = { ...DEFAULT_SCROLLBAR, ...opt, ...{styles}, ...{classes} };
+    const out = { ...DEFAULT_SCROLLBAR, ...opt, ...{styles}, ...{classes} };
+    if (construct) {
+      this.options = out;
+    }
+
+    return out;
   }
 
   /**
