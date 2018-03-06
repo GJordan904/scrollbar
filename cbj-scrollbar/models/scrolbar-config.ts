@@ -19,6 +19,23 @@ export class ScrollbarConfig {
    * @param {ScrollbarOptions} opt
    */
   constructor(opt: ScrollbarOptions) {
+    this.mergeOptions(opt, true);
+  }
+
+  /**
+   * Merge the defaults and options by performing a deep merge
+   *
+   * @param {ScrollbarOptions} opt the scrollbar options to merge with the defaults
+   * @param {boolean} setOpt flag indicating whether the created options should be assigned to the options member variable
+   * @param {ScrollbarOptions} mergeWith optional default scrollbar options to be used instead of the package defaults
+   *
+   * @return {ScrollbarOptions}
+   */
+  mergeOptions(opt: ScrollbarOptions, setOpt: boolean = false, mergeWith?: ScrollbarOptions) {
+    let defaults = DEFAULT_SCROLLBAR;
+    if (mergeWith) {
+      defaults = mergeWith;
+    }
     let styles = {};
     let classes = {};
 
@@ -26,27 +43,32 @@ export class ScrollbarConfig {
     if (opt.styles) {
       const keys = Object.keys(opt.styles);
       for (const key of keys) {
-        styles[key] = { ...DEFAULT_SCROLLBAR.styles[key], ...opt.styles[key] };
+        styles[key] = { ...defaults.styles[key], ...opt.styles[key] };
       }
 
-      styles = { ...DEFAULT_SCROLLBAR.styles, ...styles};
+      styles = { ...defaults.styles, ...styles};
     }else {
-      styles = {...DEFAULT_SCROLLBAR.styles};
+      styles = {...defaults.styles};
     }
 
     // Concatenate any user defined classes with the defaults
     if (opt.classes) {
       const keys = Object.keys(opt.classes);
       for (const key of keys) {
-        classes[key] = `${DEFAULT_SCROLLBAR.classes[key]} ${opt.classes[key]}`;
+        classes[key] = [...defaults.classes[key], ...opt.classes[key]];
       }
 
-      classes = { ...DEFAULT_SCROLLBAR.classes, ...classes};
+      classes = { ...defaults.classes, ...classes};
     }else {
-      classes = {...DEFAULT_SCROLLBAR.classes};
+      classes = {...defaults.classes};
     }
 
-    this.options = { ...DEFAULT_SCROLLBAR, ...opt, ...{styles}, ...{classes} };
+    const out = { ...defaults, ...opt, ...{styles}, ...{classes} };
+    if (setOpt) {
+      this.options = out;
+    }
+
+    return out;
   }
 
   /**

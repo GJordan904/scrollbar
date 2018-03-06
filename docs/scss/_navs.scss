@@ -1,6 +1,10 @@
 .navbar {
   z-index: 50000;
   height: $navbar-height;
+
+  .nav-logo {
+    height: $navbar-height - .75rem;
+  }
 }
 .indicator {
   height: .25rem;

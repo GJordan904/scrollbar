@@ -163,7 +163,9 @@ export class CbjScrollbarDirective implements OnInit, AfterViewInit, AfterViewCh
     this.wrapper = this.renderer.createElement('div');
 
     // Add Classes
-    this.renderer.addClass(this.wrapper, this.config.wClass);
+    for (const cls of this.config.wClass) {
+      this.renderer.addClass(this.wrapper, cls);
+    }
 
     // Set Dynamic Styles. Wait a tick since FF was too fast & height was still undefined
     setTimeout(() => {
@@ -191,7 +193,9 @@ export class CbjScrollbarDirective implements OnInit, AfterViewInit, AfterViewCh
     this.grid = this.renderer.createElement('div');
 
     // Add Classes
-    this.renderer.addClass(this.grid, this.config.gClass);
+    for (const cls of this.config.gClass) {
+      this.renderer.addClass(this.grid, cls);
+    }
 
     // Set Styles
     this.renderer.setStyle(this.grid, this.config.position, this.config.gridOffset);
@@ -218,7 +222,9 @@ export class CbjScrollbarDirective implements OnInit, AfterViewInit, AfterViewCh
     this.bar = this.renderer.createElement('div');
 
     // Add Classes
-    this.renderer.addClass(this.bar, this.config.bClass);
+    for (const cls of this.config.bClass) {
+      this.renderer.addClass(this.bar, cls);
+    }
 
     // Set Dynamic Styles
     const translate = this.config.position === 'right' ? 'translateX(50%)' : 'translateX(-50%)';

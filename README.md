@@ -1,8 +1,7 @@
-# Scrollbar
+# CbjScrollbar
 
-This package allows you to easily create custom scrollbars with Angular 5. It is still a work in progress and some browsers
-are better than others.  It is a great start and just needs some minor adjustments and it could be production ready. Anyone 
-wanting to contribute, I am gladly accepting PR's.
+This package allows you to easily create custom scrollbars with Angular 5. Currently tested on Chrome and Firefox
+and running very well. [Demo/Docs](https://scrollbar.codebyjordan.com)
 
 ## Table of Contents
 * [Install](#install)
@@ -42,8 +41,7 @@ export class AppModule { }
 ```
 
 ## <a name="usage"></a> Usage
-Below are a couple example usages to get started. I use Bootstrap 4 but this not required, although other styles may need
-be applied. 
+Some examples to get started.
 
 ### <a name="root"></a> As the windows main scrollbar
 Here I am going to override the browsers scrollbar and use this as the main windows scrollbar. I will be using a minimal 
@@ -318,7 +316,7 @@ export const DEFAULT_SCROLLBAR: ScrollbarOptions = {
       'bottom': 0,
       'display': 'block',
       'cursor': 'pointer',
-      'z-index': 99,
+      'z-index': 99999,
       'background': 'transparent',
       'width': '1rem',
       'border-radius': 0,
@@ -331,7 +329,7 @@ export const DEFAULT_SCROLLBAR: ScrollbarOptions = {
       'display': 'block',
       'cursor': 'pointer',
       'transition': 'opacity 250ms ease-in-out',
-      'z-index': 100,
+      'z-index': 100000,
       'background': '#495057',
       'width': '.7rem',
       'border-radius': '10px',
