@@ -40,9 +40,9 @@ export interface ScrollbarStyles {
  * Each takes a string containing a class(es) name(s) (i.e. "class" or "class1 class2 class3")
  */
 export interface ScrollbarClasses {
-  wrapper?: string;
-  grid?: string;
-  bar?: string;
+  wrapper?: string[];
+  grid?: string[];
+  bar?: string[];
 }
 
 /**
@@ -89,8 +89,8 @@ export const DEFAULT_SCROLLBAR: ScrollbarOptions = {
     }
   },
   classes: {
-    wrapper: 'cbj-scroll-wrapper',
-    grid: 'cbj-scroll-grid',
-    bar: 'cbj-scroll-bar'
+    wrapper: ['cbj-scroll-wrapper'],
+    grid: ['cbj-scroll-grid'],
+    bar: ['cbj-scroll-bar']
   }
 };
