@@ -1,31 +1,19 @@
-import { Inject, Injectable, OnDestroy, OnInit } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/observable/fromEvent';
 import { WINDOW } from './window.token';
 
 @Injectable()
-export class WindowService implements OnInit, OnDestroy {
+export class WindowService {
+  /**
+   * Observable of the window resize event
+   */
   resizeObs: Observable<any>;
-  isMobile: boolean;
 
   private _height: number;
-  private unsubscribe = new Subject<void>();
 
   constructor(@Inject(WINDOW) private w: Window) {
     this.resizeObs = Observable.fromEvent(w, 'resize');
-  }
-
-  ngOnInit(): void {
-    this.resizeObs.takeUntil(this.unsubscribe).subscribe(() => {
-      this.isMobile = this.w.innerWidth <= 992;
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
   }
 
   /**
@@ -44,6 +32,15 @@ export class WindowService implements OnInit, OnDestroy {
    */
   get width(): number {
     return this.w.innerWidth;
+  }
+
+  /**
+   * Return whether device is on a screen < 992px wide
+   *
+   * @returns {boolean}
+   */
+  get isMobile() {
+    return this.width < 992;
   }
 
   /**

@@ -1,14 +1,12 @@
 <div class="row">
-    <div class="jumbotron jumbotron-fluid text-white bg-secondary w-100">
-        <div class="row justify-content-center w-100">
-            <img src="/assets/img/cbj/cbj-logo-medium.png">
-            <div class="col-12">
-                <h1 class="text-center">
-                    CBJ Scrollbar
-                    <span class="sub">Make the Scrollbar Match the Theme</span>
-                </h1>
-            </div>
-            <div class="col-12 d-flex justify-content-center">
+    <div class="jumbotron jumbotron-fluid text-white bg-secondary">
+        <div class="d-flex flex-column py-5 align-items-center">
+            <img class="img-fluid" src="assets/img/cbj/cbj-logo-medium.png">
+            <h1 class="text-center">
+                CBJ Scrollbar
+                <span class="sub">Make the Scrollbar Match the Theme</span>
+            </h1>
+            <div class="d-flex justify-content-center">
                 <a routerLink="/getting-started" class="btn raised btn-primary mt-5 mr-2">
                     Get Started
                 </a>
@@ -31,7 +29,7 @@
 
 <div class="container-fluid home-content">
     <div class="row align-items-center py-5 bg-primary">
-        <div class="col-5">
+        <div class="col-lg-5">
             <div class="card scroll-card">
                 <div class="card-body" [cbjScrollbar]="firstCardScroll">
                     <h3 class="card-title">Check Me Out!</h3>
@@ -41,19 +39,19 @@
             </div>
         </div>
 
-        <div class="col-7 text-white">
+        <div class="col-lg-7 text-white mt-3 mt-lg-0">
             <h2>Fully Customizable</h2>
             <p>
                 Since the directive prevents the browser from rendering a scrollbar and instead draws one, we are able
                 to fully control the look through css properties. Properties can be set either through a convenient
-                <a routerLink="/configuration">configuration object</a>, or added via some
-                <a routerLink="/getting-started">css classes</a>.
+                <a routerLink="/configuration" class="text-secondary">configuration object</a>, or added via some
+                <a routerLink="/getting-started" class="text-secondary">css classes</a>.
             </p>
         </div>
     </div>
 
     <div class="row align-items-center py-5">
-        <div class="col-7">
+        <div class="col-lg-7">
             <h2>Angular Package Format</h2>
             <p>
                 This package has been built with <a target="_blank" href="https://github.com/dherges/ng-packagr">ng-packagr</a> and meets the APF
@@ -61,7 +59,7 @@
             </p>
         </div>
 
-        <div class="col-5">
+        <div class="col-lg-5 mt-3 mt-lg-0">
             <div class="card bg-secondary scroll-card text-white">
                 <div class="card-body" [cbjScrollbar]="secondCardScroll">
                     <h3 class="card-title">Where am I ?!</h3>
@@ -76,7 +74,7 @@
     </div>
 
     <div class="row align-items-center bg-dark py-5">
-        <div class="col-5">
+        <div class="col-lg-5">
             <div class="card bg-success scroll-card text-white">
                 <div class="card-body" [cbjScrollbar]="thirdCardScroll">
                     <h3 class="card-title">Observe the Scroll</h3>
@@ -90,7 +88,7 @@
             </div>
         </div>
 
-        <div class="col-7 text-white">
+        <div class="col-lg-7 text-white mt-3 mt-lg-0">
             <h2>Cross Browser</h2>
             <p>
                 The main objective of this project is to provide a browser and device agnostic custom scrollbar solution.

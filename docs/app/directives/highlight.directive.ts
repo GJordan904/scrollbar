@@ -1,4 +1,5 @@
-import {Directive, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Directive, ElementRef, Input, OnInit} from '@angular/core';
+import {HighlightCode} from '../models';
 import * as Prism from 'prismjs';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-typescript';
@@ -10,42 +11,20 @@ import 'prismjs/components/prism-bash';
 @Directive({
   selector: '[cbjHighlight]'
 })
-export class HighlightDirective implements OnInit {
-  @Input('cbjHighlight')cbjHighlight: any;
+export class HighlightDirective implements OnInit, AfterViewInit {
+  @Input('cbjHighlight')cbjHighlight: HighlightCode;
+  private fCode: string;
 
-  constructor() { }
+  constructor(private el: ElementRef) { }
 
   ngOnInit() {
-    const code = this.cbjHighlight.code;
-    const language = this.getLanguage();
-    this.cbjHighlight.code = Prism.highlight(code, language);
+    this.fCode = Prism.highlight(
+      this.cbjHighlight.code,
+      Prism.languages[this.cbjHighlight.language]
+    );
   }
 
-  private getLanguage(): Prism.LanguageDefinition {
-    let lang: Prism.LanguageDefinition;
-    switch (this.cbjHighlight.language) {
-      case 'javascript':
-        lang = Prism.languages.javascript;
-        break;
-      case 'typescript':
-        lang = Prism.languages.typescript;
-        break;
-      case 'markup':
-        lang = Prism.languages.markup;
-        break;
-      case 'php':
-        lang = Prism.languages.php;
-        break;
-      case 'scss':
-        lang = Prism.languages.scss;
-        break;
-      case 'bash':
-        lang = Prism.languages.bash;
-        break;
-      default:
-        lang = Prism.languages.typescript;
-        break;
-    }
-    return lang;
+  ngAfterViewInit() {
+    this.el.nativeElement.innerHTML = this.fCode;
   }
 }

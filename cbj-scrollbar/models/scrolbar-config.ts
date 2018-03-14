@@ -105,6 +105,14 @@ export class ScrollbarConfig {
 
   /**
    *
+   * @returns {string}
+   */
+  get wrapperWidth() {
+    return this.options.wrapperWidth;
+  }
+
+  /**
+   *
    * @returns {string | number | undefined}
    */
   get gridOffset() {

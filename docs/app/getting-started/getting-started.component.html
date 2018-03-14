@@ -1,18 +1,16 @@
 <div class="row">
     <div class="jumbotron jumbotron-fluid text-white bg-secondary w-100">
-        <div class="row justify-content-center w-100">
             <h1 class="text-center">
                 Getting Started
                 <span class="sub">Installation & Basic Use</span>
             </h1>
-        </div>
     </div>
 </div>
 
 <div class="container-fluid pt-4">
     <h2>First things first</h2>
     <p>
-        We need to install and import the package. Easiest way will be with npm but if you would rather tinker a bit then
+        We need to install and import the package. Easiest way will be with npm but if you would rather tinker a bit, then
         go ahead and grab the source. Once you have done that, you will need to import the package into the root module
         using the forRoot method. Be sure not to use forRoot in any lazy-loaded modules, just import CbjScrollbarModule
         in that case.
@@ -25,13 +23,13 @@
                 </div>
                 <div class="card-body">
                     <h4 class="card-title">With NPM</h4>
-                    <pre><code [cbjHighlight]="installCode" [innerHTML]="installCode.code"></code></pre>
+                    <pre><code [cbjHighlight]="installCode"></code></pre>
 
                     <h4 class="card-title mt-4">Build Source</h4>
                     <ol class="spaced-list">
                         <li>Clone the Repo: <a class="btn btn-secondary" href="https://github.com/gjordan904/cbj-ui" target="_blank"><span class="dev-icon github tiny"></span></a></li>
                         <li>Navigate to the root of the repo.</li>
-                        <li>Run <pre><code [cbjHighlight]="buildCode" [innerHTML]="buildCode.code"></code></pre></li>
+                        <li>Run <pre><code [cbjHighlight]="buildCode"></code></pre></li>
                         <li>Copy the newly created dist/scrollbar directory into a location that will be resolved by webpack and adjust your imports accordingly</li>
                         <li>You should now be able to use the package as outlined below</li>
                     </ol>
@@ -45,7 +43,7 @@
                     <h2>Import</h2>
                 </div>
                 <div class="card-body">
-                    <pre><code [cbjHighlight]="importCode" [innerHTML]="importCode.code"></code></pre>
+                    <pre><code [cbjHighlight]="importCode"></code></pre>
                 </div>
             </div>
         </div>
@@ -53,7 +51,7 @@
 
     <h2 class="mt-5">A Simple Implementation</h2>
     <p>
-        This is the code for the main scrollbar on this site. I added some comments to the template to help to visualize
+        This is the code for the main scrollbar on this site. I have added some comments to the template to help visualize
         what the directive is doing.
     </p>
     <p>
@@ -68,7 +66,7 @@
                     <h2>Template</h2>
                 </div>
                 <div class="card-body">
-                    <pre><code [cbjHighlight]="templateCode" [innerHTML]="templateCode.code"></code></pre>
+                    <pre><code [cbjHighlight]="templateCode"></code></pre>
                 </div>
             </div>
         </div>
@@ -79,41 +77,67 @@
                     <h2>Component</h2>
                 </div>
                 <div class="card-body">
-                    <pre><code [cbjHighlight]="componentCode" [innerHTML]="componentCode.code"></code></pre>
+                    <pre><code [cbjHighlight]="componentCode"></code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="mt-5">Styling</h2>
+    <p class="lead text-danger">
+        *Important* The element that the scrollbar is attached to MUST have a set height.
+    </p>
+    <p>
+        This package adds all the necessary styles inline on the elements that need them so there is no stylesheet
+        that needs to be added to the page. I do however, add classes to the generated elements to make
+        adding more styles a little simpler.
+    </p>
+    <p>
+        In addition to adding styles on the classes, one can add styles, and override defaults, by adding to the
+        inline styles. This is easily achieved through the use of the <a routerLink="/configuration">configuration class</a>
+    </p>
+    <p>
+        The package will add the necessary styles by default to display the scrollbar as best it can. Additional styling
+        is to be expected to achieve the exact look you desire. Below are the styles I have set on the element holding the
+        sites main scrollbar.
+    </p>
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card bg-primary mt-4 text-white">
+                <div class="card-header">
+                    <h2 id="styles">Classes</h2>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>
+                            <pre class="d-inline p-1"><code><span class="token variable">cbj-scroll-wrapper</span></code></pre>:
+                            The scroll wrapper is an element created by the directive that wraps the element
+                            containing the directive and the created scrollbar and grid.
+                        </li>
+                        <li class="mt-3">
+                            <pre class="d-inline p-1"><code><span class="token variable">cbj-scroll-grid</span></code></pre>:
+                            The scroll grid is the container of the scrollbar. It wil stretch from the top of
+                            the scroll wrapper to the bottom.
+                        <li class="mt-3">
+                            <pre class="d-inline p-1"><code><span class="token variable">cbj-scroll-bar</span></code></pre>:
+                            The scrollbar itself.
+                        </li>
+                    </ul>
+
+                        <div class="col-lg-6">
+
+                        </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-12">
-            <div class="card bg-primary mt-4 text-white">
+        <div class="col-xl-6">
+            <div class="card bg-secondary text-white mt-4">
                 <div class="card-header">
-                    <h2 id="styles">Styles</h2>
+                    <h2>Example Styles</h2>
                 </div>
-                <div class="container-fluid py-3">
-                    <div class="row align-items-center">
-                        <div class="col-lg-6">
-                            <h4 class="card-title">Classes</h4>
-                            <ul>
-                                <li>
-                                    <pre class="d-inline p-1"><code><span class="token variable">cbj-scroll-wrapper</span></code></pre>:
-                                    The scroll wrapper is an element created by the directive that wraps the element
-                                    containing the directive and the created scrollbar and grid.
-                                </li>
-                                <li class="mt-3">
-                                    <pre class="d-inline p-1"><code><span class="token variable">cbj-scroll-grid</span></code></pre>:
-                                    The scroll grid is the container of the scrollbar. It wil stretch from the top of
-                                    the scroll wrapper to the bottom.
-                                <li class="mt-3">
-                                    <pre class="d-inline p-1"><code><span class="token variable">cbj-scroll-bar</span></code></pre>:
-                                The scrollbar itself.
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <pre><code [cbjHighlight]="stylesCode" [innerHTML]="stylesCode.code"></code></pre>
-                        </div>
-                    </div>
+                <div class="card-body">
+                    <pre><code [cbjHighlight]="stylesCode"></code></pre>
                 </div>
             </div>
         </div>

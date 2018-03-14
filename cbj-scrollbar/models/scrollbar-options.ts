@@ -5,8 +5,11 @@ import {Subject} from 'rxjs/Subject';
  *
  * @property {boolean}          - isRoot         - flag to set when the scrollbar is used as the main windows scrollbar
  * @property {string}           - position       - The side of the window the scrollbar appears
- * @property {boolean}          - alwaysVisible  -  flag to set when the scrollbar should remain visible
+ * @property {boolean}          - alwaysVisible  - flag to set when the scrollbar should remain visible
  * @property {number}           - visibleTimeout - the time before the scrollbar auto hides
+ * @property {string}           - wrapperWidth   - the css value for the width property of the wrapper element
+ * @property {number}           - gridOffset     - the css value for the {position} property that is applied to the grid
+ * @property {number}           - barOffset      - the css value for the {position} property that is applied to the bar
  * @property {Subject}          - toggleClasses  - for toggling classes on the 3 generated elements
  * @property {ScrollbarStyles}  - styles         - the styles to be applied to the 3 generated elements
  * @property {ScrollbarClasses} - classes        - the classes to be applied to the 3 generated elements
@@ -16,6 +19,7 @@ export interface ScrollbarOptions {
   position?: string;
   alwaysVisible?: boolean;
   visibleTimeout?: number;
+  wrapperWidth?: string;
   gridOffset?: string | number;
   barOffset?: string | number;
   toggleClasses?: Subject<{ el: string, classes: string, remove: boolean }>;
@@ -25,6 +29,7 @@ export interface ScrollbarOptions {
 
 /**
  * @interface {ScrollbarStyles}
+ *
  * Can contain a key for any of the three elements created by the directive (wrapper, grid, bar)
  * Each with an object containing any valid css properties as keys with a valid value as a string or number
  */
@@ -36,8 +41,9 @@ export interface ScrollbarStyles {
 
 /**
  * @interface {ScrollbarClasses}
+ *
  * Can contain a key for any of the three elements created by the directive (wrapper, grid, bar)
- * Each takes a string containing a class(es) name(s) (i.e. "class" or "class1 class2 class3")
+ * Each key can take an array of class names
  */
 export interface ScrollbarClasses {
   wrapper?: string[];
@@ -54,14 +60,10 @@ export const DEFAULT_SCROLLBAR: ScrollbarOptions = {
   position: 'right',
   alwaysVisible: false,
   visibleTimeout: 3000,
+  wrapperWidth: '100%',
   gridOffset: 0,
   barOffset: '.5rem',
   styles: {
-    wrapper: {
-      'width': '100%',
-      'overflow': 'hidden',
-      'display': 'flex'
-    },
     grid: {
       'position': 'absolute',
       'top': 0,

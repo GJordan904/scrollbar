@@ -58,7 +58,8 @@ export class ScrollbarService implements OnDestroy {
       });
   }
 
-  public initDrag(el: HTMLElement, bar: HTMLElement): { start: Observable<any>, end: Observable<any> } {
+  public initDrag(el: HTMLElement, bar: HTMLElement):
+  { start: Observable<any>, end: Observable<any>, move: Observable<any> } {
     let observs;
 
     const mousemove = Observable.fromEvent(this.ws.window, 'mousemove');
@@ -77,10 +78,11 @@ export class ScrollbarService implements OnDestroy {
 
     observs = {
       start: mousedrag,
-      end: mouseup
+      end: mouseup,
+      move: mousemove
     };
 
-    if (this.ws.width <= 992) {
+    if (this.ws.isMobile) {
       const touchmove = Observable.fromEvent(this.ws.window, 'touchmove');
       const touchstart = Observable.fromEvent(el, 'touchstart');
       const touchend = Observable.fromEvent(this.ws.window, 'touchend');
@@ -96,7 +98,8 @@ export class ScrollbarService implements OnDestroy {
 
       observs = {
         start: Observable.merge(...[mousedrag, touchdrag]),
-        end: Observable.merge(...[mouseup, touchend])
+        end: Observable.merge(...[mouseup, touchend]),
+        move: Observable.merge(...[mousemove, touchstart])
       };
     }
 
