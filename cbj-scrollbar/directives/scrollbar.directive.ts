@@ -180,7 +180,9 @@ export class CbjScrollbarDirective implements OnInit, AfterViewInit, AfterViewCh
     }, 250);
 
     // Set Other Styles
-    this.renderer.setStyle(this.wrapper, 'width', this.config.wrapperWidth); // Fixes main scrollbar issue in FF with default setting of 100%
+    if (this.config.wrapperWidth) {
+      this.renderer.setStyle(this.wrapper, 'width', this.config.wrapperWidth); // Fixes main scrollbar issue in FF
+    }
     for (const prop in this.config.wStyles) {
       if (this.config.wStyles.hasOwnProperty(prop)) {
         this.renderer.setStyle(this.wrapper, prop, this.config.wStyles[prop]);

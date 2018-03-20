@@ -19,7 +19,7 @@ export interface ScrollbarOptions {
   position?: string;
   alwaysVisible?: boolean;
   visibleTimeout?: number;
-  wrapperWidth?: string;
+  wrapperWidth?: string | boolean;
   gridOffset?: string | number;
   barOffset?: string | number;
   toggleClasses?: Subject<{ el: string, classes: string, remove: boolean }>;
