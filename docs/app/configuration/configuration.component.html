@@ -1,18 +1,17 @@
 <div class="row">
   <div class="jumbotron jumbotron-fluid text-white bg-secondary w-100">
-    <div class="row justify-content-center w-100">
       <h1 class="text-center">
         Configuration
       </h1>
-    </div>
   </div>
 </div>
 
 <div class="container-fluid pt-4">
   <h2>Overview</h2>
   <p class="lead">
-    No matter what, a ScrollbarConfig object must be instantiated. If you want to go with a zero config you can pass
-    an empty object to the configs constructor but a ScrollbarConfig object must be passed to the directive.
+    No matter what, a ScrollbarConfig object must be instantiated. If you want to go with zero config, you can pass
+    an empty object to the configs constructor and use the defaults but a ScrollbarConfig object must be created
+    and passed to the directive.
   </p>
 
   <p>
@@ -81,7 +80,7 @@
                 <td>string</td>
                 <td>'right'</td>
                 <td>
-                  The position of the scrollbar. Valid options are 'right' and 'left'.
+                  The position of the scrollbar. Valid options are 'right' or 'left'.
                 </td>
               </tr>
               <tr>
@@ -121,7 +120,13 @@
                 <td>Subject<&#123; el: string, classes: string, remove: boolean &#125;></td>
                 <td>undefined</td>
                 <td>
-                  A Subject that can be used to toggle classes on the wrapper, grid, or bar elements.
+                  A Subject that can be used to toggle classes on the wrapper, grid, or bar elements. When a class needs toggled,
+                  call next() on the subject and pass an object with the following properties:
+                  <ul>
+                    <li><strong>el:</strong> &#123;string&#125; - the element to toggle classes on. (wrapper, grid, or bar)</li>
+                    <li><strong>classes:</strong> &#123;string&#125; - the class</li>
+                    <li><strong>remove:</strong> &#123;boolean&#125; - whether to remove the class</li>
+                  </ul>
                 </td>
               </tr>
               <tr>
@@ -137,7 +142,7 @@
                 <td>classes</td>
                 <td>ScrollbarClasses</td>
                 <td>See Above</td>
-                <td>The ScrollbarClasses interface has a key for each the wrapper, grid, and bar element that accept a string of class(es) to
+                <td>The ScrollbarClasses interface has a key for each the wrapper, grid, and bar element that accept an array of class(es) to
                   be applied to the element.
                 </td>
               </tr>

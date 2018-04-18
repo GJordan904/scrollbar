@@ -24,7 +24,7 @@ import { CbjScrollbarModule } from '@codebyjordan/scrollbar';
 @NgModule({
   imports: [
     BrowserModule,
-    CbjScrollbarModule.forRoot() // Only use forRoot in your root module
+    CbjScrollbarModule.forRoot({}) // Only use forRoot in your root module
   ],
   providers: [],
   bootstrap: [AppComponent]
@@ -33,16 +33,22 @@ export class AppModule { }`
   };
   templateCode = {
     language: 'markup',
-    code: `<div class="row"> <!-- This element will be made position: relative
-    
-      <!-- cbj-scroll-wrapper open tag will be inserted here -->
-        <div class="main-content" [cbjScrollbar]="mainScrollbar">
-            <router-outlet></router-outlet>
-        </div>
-        <!-- cbj-scroll-grid element will be inserted here -->
-        <!-- cbj-scroll-bar element will be inserted here -->
-      <!-- cbj-scroll-wrapper close tag will be inserted here -->  
-      
+    code: `<div class="container-fluid">
+  <div class="row">
+      <nav class="navbar">
+          ...
+      </nav>
+  </div>
+  
+  <div class="row"> <!-- This element will be made position: relative  
+    <!-- cbj-scroll-wrapper open tag will be inserted here -->
+      <div class="main-content" [cbjScrollbar]="mainScrollbar">
+        <router-outlet></router-outlet>
+      </div>
+      <!-- cbj-scroll-grid element will be inserted here -->
+      <!-- cbj-scroll-bar element will be inserted here -->
+    <!-- cbj-scroll-wrapper close tag will be inserted here -->  
+  </div>
 </div>`
   };
   componentCode = {
@@ -73,7 +79,6 @@ $navbar-height: 3.25rem;
 
 .main-content {
   height: calc(100vh - #{$navbar-height});
-  padding: 0 0 2rem 0;
   width: 100%;
 }`
   };

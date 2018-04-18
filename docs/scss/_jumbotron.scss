@@ -1,16 +1,29 @@
-/**
- * Jumbotron
- */
+//
+// Jumbotron
+//
 .jumbotron {
   @include elevation-1;
   margin-bottom: 1.5rem;
 
   h1 {
-    font-size: 4rem;
-
     .sub {
       display: block;
-      font-size: 1.5rem
+      font-size: 1rem;
+      margin-top: .5rem;
     }
   }
+
+  @include media-breakpoint-up(lg) {
+    h1 {
+      font-size: 4rem;
+
+      .sub {
+        font-size: 1.5rem
+      }
+    }
+  }
+}
+
+.jumbotron-fluid {
+  width: 100%;
 }
